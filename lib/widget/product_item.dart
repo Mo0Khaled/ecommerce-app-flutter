@@ -22,6 +22,7 @@ class ProductItem extends StatelessWidget {
                   child: Image.asset(
                     productPro.img,
                     fit: BoxFit.cover,
+                    width: double.infinity,
                   ),
                 ),
                 Padding(

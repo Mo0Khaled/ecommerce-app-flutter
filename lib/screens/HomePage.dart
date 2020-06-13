@@ -1,3 +1,4 @@
+import 'package:boltecommerce/screens/featured.dart';
 import 'package:boltecommerce/widget/productList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -80,12 +81,15 @@ class HomePage extends StatelessWidget {
             ),
             buildTitle(
               title: "Featured",
-              onPressed: () {},
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(FeaturedPage.routeId),
             ),
             Container(
               width: double.infinity,
               height: 260,
-              child: ProductList(),
+              child: ProductList(
+                scrollDirection: Axis.horizontal,
+              ),
             ),
             buildTitle(
               title: "Best Sell",
@@ -94,7 +98,9 @@ class HomePage extends StatelessWidget {
             Container(
               width: double.infinity,
               height: 260,
-              child: ProductList(),
+              child: ProductList(
+                scrollDirection: Axis.horizontal,
+              ),
             ),
           ],
         ),
