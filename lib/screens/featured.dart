@@ -9,7 +9,6 @@ class FeaturedPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        centerTitle: true,
 //        leading: Icon(Icons.expand_less),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),

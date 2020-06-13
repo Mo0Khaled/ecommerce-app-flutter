@@ -1,3 +1,4 @@
+import 'package:boltecommerce/screens/product_details.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../providers/product.dart';
@@ -18,7 +19,9 @@ class ProductItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.of(context).pushNamed(
+                      ProductDetails.routeId,
+                      arguments: productPro.id),
                   child: Image.asset(
                     productPro.img,
                     fit: BoxFit.cover,

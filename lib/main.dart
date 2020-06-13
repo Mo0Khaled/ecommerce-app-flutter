@@ -1,6 +1,7 @@
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/featured.dart';
+import 'package:boltecommerce/screens/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,7 @@ class BoltApp extends StatelessWidget {
         routes: {
           HomePage.routeId: (context) => HomePage(),
           FeaturedPage.routeId: (context) => FeaturedPage(),
+          ProductDetails.routeId: (context) => ProductDetails(),
         },
       ),
     );
