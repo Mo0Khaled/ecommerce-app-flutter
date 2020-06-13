@@ -25,11 +25,11 @@ class ProductItem extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 5, bottom: 5, left: 3),
+                  padding: const EdgeInsets.only(top: 5, bottom: 5, left: 7),
                   child: Text('\$${productPro.price}'),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 3),
+                  padding: const EdgeInsets.only(left: 7),
                   child: Text(productPro.title),
                 ),
               ],
