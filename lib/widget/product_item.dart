@@ -1,6 +1,4 @@
 import 'package:boltecommerce/screens/product_details.dart';
-import 'package:flutter/cupertino.dart';
-
 import '../providers/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

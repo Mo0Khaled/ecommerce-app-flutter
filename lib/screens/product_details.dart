@@ -1,6 +1,8 @@
+import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
+import 'package:boltecommerce/screens/cart_screen.dart';
+import 'package:boltecommerce/widget/badge.dart';
 import 'package:boltecommerce/widget/containerSize.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,9 +25,11 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+//    final loadedProduct = Provider.of<Product>(context);
     final productId = ModalRoute.of(context).settings.arguments as String;
     final loadedProduct =
         Provider.of<ProductProviders>(context).findById(productId);
+    final cartPro = Provider.of<Cart>(context, listen: false);
     const activeCardColor = Color(0xff667EEA);
     const inActiveColor = Color(0xffE1E1E1);
     return Scaffold(
@@ -35,7 +39,16 @@ class _ProductDetailsState extends State<ProductDetails> {
 //        leading: Icon(Icons.expand_less),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
-          IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
+          Consumer<Cart>(
+            builder: (context, cartP, ch) => Badge(
+              value: cartP.itemCount.toString(),
+              child: IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(CartScreen.routeId),
+              ),
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -114,9 +127,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    SizedBox(
-                      width: 50,
-                    ),
+                    Spacer(),
                     Text(
                       "49 Reviews",
                       style: TextStyle(
@@ -259,7 +270,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         padding: EdgeInsets.symmetric(vertical: 20),
                         color: Color(0xffD8D6D6),
                         textColor: Colors.white,
-                        onPressed: () {},
+                        onPressed: () => cartPro.addItem(
+                          loadedProduct.id,
+                          loadedProduct.price,
+                          loadedProduct.title,
+                          loadedProduct.img,
+                        ),
                         child: Text(
                           "ADD TO CART",
                           style: TextStyle(fontSize: 20),

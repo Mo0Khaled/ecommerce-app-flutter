@@ -1,5 +1,7 @@
+import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
+import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/featured.dart';
 import 'package:boltecommerce/screens/product_details.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +17,12 @@ class BoltApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ProductProviders(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => Cart(),
+        ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: "Bolt eCommerce",
         theme: ThemeData(
           primaryIconTheme: IconThemeData(
@@ -29,6 +35,7 @@ class BoltApp extends StatelessWidget {
           HomePage.routeId: (context) => HomePage(),
           FeaturedPage.routeId: (context) => FeaturedPage(),
           ProductDetails.routeId: (context) => ProductDetails(),
+          CartScreen.routeId: (context) => CartScreen(),
         },
       ),
     );

@@ -1,20 +1,31 @@
+import 'package:boltecommerce/providers/cart.dart';
+import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/featured.dart';
+import 'package:boltecommerce/widget/badge.dart';
 import 'package:boltecommerce/widget/productList.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   static const routeId = '/Home';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      drawerScrimColor: Colors.black,
       drawer: Drawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
-          IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
+          Consumer<Cart>(
+            builder: (context, cartPro, ch) => Badge(
+              value: cartPro.itemCount.toString(),
+              child: IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(CartScreen.routeId),
+              ),
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
