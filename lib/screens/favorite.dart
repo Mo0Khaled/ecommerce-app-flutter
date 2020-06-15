@@ -10,7 +10,10 @@ class FavoriteScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-//        leading: Icon(Icons.expand_less),
+//        leading: IconButton(
+//          icon: Icon(Icons.expand_less),
+//          onPressed: () { },
+//        ),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
           IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
@@ -21,7 +24,7 @@ class FavoriteScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              "Featured",
+              "Favorites",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),

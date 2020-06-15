@@ -22,6 +22,7 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   sizeType selectedSize;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     const activeCardColor = Color(0xff667EEA);
     const inActiveColor = Color(0xffE1E1E1);
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -279,12 +281,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                         padding: EdgeInsets.symmetric(vertical: 20),
                         color: Color(0xffD8D6D6),
                         textColor: Colors.white,
-                        onPressed: () => cartPro.addItem(
-                          loadedProduct.id,
-                          loadedProduct.price,
-                          loadedProduct.title,
-                          loadedProduct.img,
-                        ),
+                        onPressed: () {
+                          cartPro.addItem(
+                            loadedProduct.id,
+                            loadedProduct.price,
+                            loadedProduct.title,
+                            loadedProduct.img,
+                          );
+                          _scaffoldKey.currentState.hideCurrentSnackBar();
+                          _scaffoldKey.currentState.showSnackBar(
+                            SnackBar(
+                              content: Text("add one to the Cart!"),
+                              duration: Duration(seconds: 2),
+                              action: SnackBarAction(
+                                label: "UNDO",
+                                onPressed: () =>
+                                    cartPro.removeSingleItem(loadedProduct.id),
+                              ),
+                            ),
+                          );
+                        },
                         child: Text(
                           "ADD TO CART",
                           style: TextStyle(fontSize: 20),

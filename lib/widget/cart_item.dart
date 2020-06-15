@@ -40,6 +40,25 @@ class CartItem extends StatelessWidget {
       ),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) => dismissProd.removeItems(productId),
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Are You Sure?"),
+            content: Text("Do You Want to remove the Item From The Cart?"),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text("No"),
+              ),
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text("Yes"),
+              ),
+            ],
+          ),
+        );
+      },
       child: Card(
         margin: EdgeInsets.symmetric(
           horizontal: 15,
@@ -103,7 +122,29 @@ class CartItem extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: IconButton(
                     icon: Icon(Icons.clear),
-                    onPressed: () => dismissProd.removeItems(productId),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("Are You Sure?"),
+                          content: Text(
+                              "Do You Want to remove the Item From The Cart?"),
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text("No"),
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                dismissProd.removeItems(productId);
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("Yes"),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 )
               ],
