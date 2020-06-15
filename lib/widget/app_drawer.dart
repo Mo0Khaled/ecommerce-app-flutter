@@ -1,5 +1,6 @@
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
+import 'package:boltecommerce/screens/favorite.dart';
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -8,10 +9,6 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: <Widget>[
-          AppBar(
-            title: Text("Hello Friend!"),
-            automaticallyImplyLeading: false,
-          ),
           Divider(),
           ListTile(
             leading: Icon(Icons.payment),
@@ -24,6 +21,12 @@ class AppDrawer extends StatelessWidget {
             title: Text("Cart"),
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(CartScreen.routeId),
+          ),
+          ListTile(
+            leading: Icon(Icons.shop),
+            title: Text("Favorites"),
+            onTap: () =>
+                Navigator.of(context).pushNamed(FavoriteScreen.routeId),
           ),
         ],
       ),

@@ -1,11 +1,11 @@
 import 'package:boltecommerce/widget/featuredList.dart';
 import 'package:flutter/material.dart';
 
-class FeaturedPage extends StatelessWidget {
-  static const routeId = "/Featured";
+class FavoriteScreen extends StatelessWidget {
+  static const routeId = '/Fav';
   @override
   Widget build(BuildContext context) {
-    var _showFavOnly = false;
+    var _showFavOnly = true;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

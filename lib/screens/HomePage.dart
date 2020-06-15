@@ -1,6 +1,7 @@
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/featured.dart';
+import 'package:boltecommerce/widget/app_drawer.dart';
 import 'package:boltecommerce/widget/badge.dart';
 import 'package:boltecommerce/widget/productList.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: AppDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         actions: <Widget>[

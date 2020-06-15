@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FeaturedList extends StatelessWidget {
+  final bool showFav;
+
+  FeaturedList(this.showFav);
+
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<ProductProviders>(context);
-    final products = productData.items;
+    final products = showFav ? productData.favItems : productData.items;
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: GridView.builder(

@@ -2,6 +2,7 @@ import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
+import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/featured.dart';
 import 'package:boltecommerce/screens/product_details.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class BoltApp extends StatelessWidget {
           FeaturedPage.routeId: (context) => FeaturedPage(),
           ProductDetails.routeId: (context) => ProductDetails(),
           CartScreen.routeId: (context) => CartScreen(),
+          FavoriteScreen.routeId: (context) => FavoriteScreen(),
         },
       ),
     );

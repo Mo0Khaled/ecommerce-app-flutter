@@ -38,7 +38,16 @@ class _ProductDetailsState extends State<ProductDetails> {
         elevation: 0,
 //        leading: Icon(Icons.expand_less),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
+          IconButton(
+            icon: Icon(
+                loadedProduct.isFav ? Icons.favorite : Icons.favorite_border),
+            color: Colors.red,
+            onPressed: () {
+              setState(() {
+                loadedProduct.toggleFav();
+              });
+            },
+          ),
           Consumer<Cart>(
             builder: (context, cartP, ch) => Badge(
               value: cartP.itemCount.toString(),
