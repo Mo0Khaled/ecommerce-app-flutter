@@ -1,5 +1,4 @@
 import 'package:boltecommerce/providers/cart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +9,6 @@ class CartItem extends StatelessWidget {
   final int quantity;
   final double price;
   final String img;
-
   CartItem({
     this.id,
     this.productId,

@@ -1,3 +1,4 @@
+import 'package:boltecommerce/screens/product_details.dart';
 import 'package:flutter/foundation.dart';
 
 class CartItem with ChangeNotifier {
@@ -62,11 +63,12 @@ class Cart with ChangeNotifier {
       _items.update(
         productId,
         (value) => CartItem(
-            id: value.id,
-            title: value.title,
-            quantity: value.quantity + 1,
-            price: value.price,
-            img: value.img),
+          id: value.id,
+          title: value.title,
+          quantity: value.quantity + 1,
+          price: value.price,
+          img: value.img,
+        ),
       );
     }
     notifyListeners();
@@ -75,14 +77,15 @@ class Cart with ChangeNotifier {
   void removeOne(String productId) {
     if (_items.containsKey(productId)) {
       _items.update(
-          productId,
-          (value) => CartItem(
-              id: value.id,
-              title: value.title,
-              quantity:
-                  value.quantity <= 0 ? value.quantity : value.quantity - 1,
-              price: value.price,
-              img: value.img));
+        productId,
+        (value) => CartItem(
+          id: value.id,
+          title: value.title,
+          quantity: value.quantity <= 0 ? value.quantity : value.quantity - 1,
+          price: value.price,
+          img: value.img,
+        ),
+      );
     }
     notifyListeners();
   }
