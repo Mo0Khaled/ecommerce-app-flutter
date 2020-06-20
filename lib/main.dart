@@ -1,3 +1,4 @@
+import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
@@ -20,6 +21,9 @@ class BoltApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => Cart(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AddressProvider(),
         ),
       ],
       child: MaterialApp(
