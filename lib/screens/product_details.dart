@@ -1,4 +1,5 @@
 import 'package:boltecommerce/providers/cart.dart';
+import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
@@ -32,6 +33,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final loadedProduct =
         Provider.of<ProductProviders>(context).findById(productId);
     final cartPro = Provider.of<Cart>(context, listen: false);
+    final orderPro = Provider.of<Orders>(context, listen: false);
     const activeCardColor = Color(0xff667EEA);
     const inActiveColor = Color(0xffE1E1E1);
     return Scaffold(
@@ -313,9 +315,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         padding: EdgeInsets.symmetric(vertical: 20),
                         textColor: Colors.white,
                         color: Color(0XFF667EEA),
-                        onPressed: () => Navigator.of(context).pushNamed(
-                            AddressScreen.routeId,
-                            arguments: loadedProduct.id),
+                        onPressed: () {
+                          orderPro.addOrder(cartPro.items.values.toList(),
+                              cartPro.totalAmount);
+                          Navigator.of(context).pushNamed(AddressScreen.routeId,
+                              arguments: loadedProduct.id);
+                        },
                         child: Text(
                           "BUY NOW",
                           style: TextStyle(fontSize: 18),

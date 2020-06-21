@@ -19,6 +19,13 @@ class Orders with ChangeNotifier {
   List<OrderItemPro> _orders = [];
 
   List<OrderItemPro> get orders => _orders;
+  double get totalAmount {
+    var total = 0.0;
+    _orders.forEach((orderItemPro) {
+      total += orderItemPro.amount;
+    });
+    return total;
+  }
 
   void addOrder(List<CartItem> cartProduct, double total) {
     _orders.insert(

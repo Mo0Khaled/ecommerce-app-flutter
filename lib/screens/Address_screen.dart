@@ -1,5 +1,6 @@
 import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/screens/add_address.dart';
+import 'package:boltecommerce/screens/payment_screen.dart';
 import 'package:boltecommerce/widget/address_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -73,7 +74,9 @@ class AddressScreen extends StatelessWidget {
                     height: 10,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(PaymentScreen.routeId);
+                    },
                     child: Container(
                       width: double.infinity,
                       height: 45,
