@@ -1,5 +1,4 @@
 import 'package:boltecommerce/providers/cart.dart' show Cart;
-import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/widget/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +41,7 @@ class CartScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: () {
-                },
+                onTap: () {},
                 child: Container(
                   width: double.infinity,
                   height: 50,
