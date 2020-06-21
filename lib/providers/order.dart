@@ -39,4 +39,9 @@ class Orders with ChangeNotifier {
     );
     notifyListeners();
   }
+
+  void removeItems(String productId) {
+    _orders.removeWhere((element) => element.id == productId);
+    notifyListeners();
+  }
 }

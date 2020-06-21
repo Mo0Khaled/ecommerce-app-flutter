@@ -6,6 +6,7 @@ import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/add_address.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
+import 'package:boltecommerce/screens/check_out.dart';
 import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/featured.dart';
 import 'package:boltecommerce/screens/orders_screen.dart';
@@ -54,6 +55,7 @@ class BoltApp extends StatelessWidget {
           AddAddress.routeId: (context) => AddAddress(),
           OrdersScreen.routeId: (context) => OrdersScreen(),
           PaymentScreen.routeId: (context) => PaymentScreen(),
+          CheckOut.routeId: (context) => CheckOut(),
         },
       ),
     );

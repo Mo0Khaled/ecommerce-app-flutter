@@ -1,4 +1,3 @@
-import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,8 @@ class OrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dismissProd = Provider.of<Cart>(context, listen: false);
+    final dismissProd = Provider.of<Orders>(context, listen: false);
+
     return Column(
       children: order.products
           .map(
@@ -32,7 +32,7 @@ class OrderItem extends StatelessWidget {
                 ),
               ),
               direction: DismissDirection.endToStart,
-              onDismissed: (direction) => dismissProd.removeItems(prod.id),
+              onDismissed: (direction) => dismissProd.removeItems(order.id),
               confirmDismiss: (direction) {
                 return showDialog(
                   context: context,

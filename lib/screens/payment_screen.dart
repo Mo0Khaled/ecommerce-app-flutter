@@ -1,4 +1,5 @@
 import 'package:boltecommerce/providers/order.dart';
+import 'package:boltecommerce/screens/check_out.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -135,7 +136,8 @@ class PaymentScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () =>
+                      Navigator.of(context).pushNamed(CheckOut.routeId),
                   child: Container(
                     width: double.infinity,
                     height: 50,
