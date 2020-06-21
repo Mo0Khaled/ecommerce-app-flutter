@@ -1,4 +1,5 @@
 import 'package:boltecommerce/providers/order.dart';
+import 'package:boltecommerce/screens/confirmation.dart';
 import 'package:boltecommerce/widget/checkOut_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +108,7 @@ class CheckOut extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                     onTap: () =>
-                        Navigator.of(context).pushNamed(CheckOut.routeId),
+                        Navigator.of(context).pushNamed(Confirmation.routeId),
                     child: Container(
                       width: double.infinity,
                       height: 50,

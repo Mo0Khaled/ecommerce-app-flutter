@@ -3,14 +3,14 @@ import 'package:flutter/foundation.dart';
 
 class AddressProvider with ChangeNotifier {
   List<Address> _addresses = [
-//    Address(
-//      id: "a1",
-//      name: 'Istiak mahmud Remon',
-//      addressLine: 'Shewrapara 958',
-//      city: 'Dhaka',
-//      phoneNumber: 152632252,
-//      postalCode: '1215',
-//    ),
+    Address(
+      id: "a1",
+      name: 'Istiak mahmud Remon',
+      addressLine: 'Shewrapara 958',
+      city: 'Dhaka',
+      phoneNumber: 152632252,
+      postalCode: '1215',
+    ),
   ];
 
   List<Address> get addresses => _addresses;
