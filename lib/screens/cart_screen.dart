@@ -1,4 +1,5 @@
 import 'package:boltecommerce/providers/cart.dart' show Cart;
+import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/widget/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,32 +38,34 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xff667EEA),
-                          Color(0xff6597F4),
-                          Color(0xff64B0FD),
-                        ],
-                      ),
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xff667EEA),
+                        Color(0xff6597F4),
+                        Color(0xff64B0FD),
+                      ],
                     ),
-                    child: Center(
-                      child: Text(
-                        "Continue",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Continue",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
                 ),
-              )),
+              ),
+            ),
+          ),
         ],
       ),
     );

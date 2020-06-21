@@ -1,3 +1,4 @@
+import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/favorite.dart';
@@ -27,6 +28,11 @@ class AppDrawer extends StatelessWidget {
             title: Text("Favorites"),
             onTap: () =>
                 Navigator.of(context).pushNamed(FavoriteScreen.routeId),
+          ),
+          ListTile(
+            leading: Icon(Icons.shop),
+            title: Text("address"),
+            onTap: () => Navigator.of(context).pushNamed(AddressScreen.routeId),
           ),
         ],
       ),

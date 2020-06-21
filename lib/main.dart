@@ -1,7 +1,9 @@
 import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
+import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
+import 'package:boltecommerce/screens/add_address.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/featured.dart';
@@ -42,6 +44,8 @@ class BoltApp extends StatelessWidget {
           ProductDetails.routeId: (context) => ProductDetails(),
           CartScreen.routeId: (context) => CartScreen(),
           FavoriteScreen.routeId: (context) => FavoriteScreen(),
+          AddressScreen.routeId: (context) => AddressScreen(),
+          AddAddress.routeId: (context) => AddAddress(),
         },
       ),
     );

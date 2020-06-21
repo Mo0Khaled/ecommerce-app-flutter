@@ -1,5 +1,6 @@
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
+import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/widget/badge.dart';
 import 'package:boltecommerce/widget/containerSize.dart';
@@ -312,7 +313,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         padding: EdgeInsets.symmetric(vertical: 20),
                         textColor: Colors.white,
                         color: Color(0XFF667EEA),
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context).pushNamed(
+                            AddressScreen.routeId,
+                            arguments: loadedProduct.id),
                         child: Text(
                           "BUY NOW",
                           style: TextStyle(fontSize: 18),

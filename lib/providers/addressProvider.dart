@@ -3,14 +3,14 @@ import 'package:flutter/foundation.dart';
 
 class AddressProvider with ChangeNotifier {
   List<Address> _addresses = [
-    Address(
-      id: "a1",
-      name: 'Istiak mahmud Remon',
-      addressLine: 'Shewrapara 958',
-      city: 'Dhaka',
-      phoneNumber: 152632252,
-      postalCode: '1215',
-    ),
+//    Address(
+//      id: "a1",
+//      name: 'Istiak mahmud Remon',
+//      addressLine: 'Shewrapara 958',
+//      city: 'Dhaka',
+//      phoneNumber: 152632252,
+//      postalCode: '1215',
+//    ),
   ];
 
   List<Address> get addresses => _addresses;
@@ -42,7 +42,7 @@ class AddressProvider with ChangeNotifier {
   }
 
   void deleteAddress(String id) {
-    _addresses.retainWhere((address) => address.id == id);
+    _addresses.removeWhere((address) => address.id == id);
     notifyListeners();
   }
 }
