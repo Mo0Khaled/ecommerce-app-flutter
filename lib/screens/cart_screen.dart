@@ -1,4 +1,5 @@
 import 'package:boltecommerce/providers/cart.dart' show Cart;
+import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/widget/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartPro = Provider.of<Cart>(context);
+    final orderPro = Provider.of<Orders>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -41,7 +43,11 @@ class CartScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  orderPro.addOrder(
+                      cartPro.items.values.toList(), cartPro.totalAmount);
+                  cartPro.clear();
+                },
                 child: Container(
                   width: double.infinity,
                   height: 50,

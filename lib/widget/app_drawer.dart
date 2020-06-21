@@ -2,6 +2,7 @@ import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/favorite.dart';
+import 'package:boltecommerce/screens/orders_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -33,6 +34,11 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.shop),
             title: Text("address"),
             onTap: () => Navigator.of(context).pushNamed(AddressScreen.routeId),
+          ),
+          ListTile(
+            leading: Icon(Icons.shop),
+            title: Text("Orders"),
+            onTap: () => Navigator.of(context).pushNamed(OrdersScreen.routeId),
           ),
         ],
       ),
