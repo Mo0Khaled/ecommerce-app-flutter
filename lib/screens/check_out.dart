@@ -107,8 +107,8 @@ class CheckOut extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(Confirmation.routeId),
+                    onTap: () => Navigator.of(context)
+                        .pushReplacementNamed(Confirmation.routeId),
                     child: Container(
                       width: double.infinity,
                       height: 50,

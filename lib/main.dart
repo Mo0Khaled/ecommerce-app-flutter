@@ -10,6 +10,7 @@ import 'package:boltecommerce/screens/check_out.dart';
 import 'package:boltecommerce/screens/confirmation.dart';
 import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/featured.dart';
+import 'package:boltecommerce/screens/loading_screen.dart';
 import 'package:boltecommerce/screens/orders_screen.dart';
 import 'package:boltecommerce/screens/payment_screen.dart';
 import 'package:boltecommerce/screens/product_details.dart';
@@ -45,7 +46,7 @@ class BoltApp extends StatelessWidget {
           ),
           primaryColor: Colors.grey,
         ),
-        initialRoute: HomePage.routeId,
+        initialRoute: Loading.routeId,
         routes: {
           HomePage.routeId: (context) => HomePage(),
           FeaturedPage.routeId: (context) => FeaturedPage(),
@@ -58,6 +59,7 @@ class BoltApp extends StatelessWidget {
           PaymentScreen.routeId: (context) => PaymentScreen(),
           CheckOut.routeId: (context) => CheckOut(),
           Confirmation.routeId: (context) => Confirmation(),
+          Loading.routeId: (context) => Loading(),
         },
       ),
     );

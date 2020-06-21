@@ -9,39 +9,37 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: <Widget>[
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.payment),
-            title: Text("Home"),
-            onTap: () =>
-                Navigator.of(context).pushReplacementNamed(HomePage.routeId),
-          ),
-          ListTile(
-            leading: Icon(Icons.shop),
-            title: Text("Cart"),
-            onTap: () =>
-                Navigator.of(context).pushReplacementNamed(CartScreen.routeId),
-          ),
-          ListTile(
-            leading: Icon(Icons.shop),
-            title: Text("Favorites"),
-            onTap: () =>
-                Navigator.of(context).pushNamed(FavoriteScreen.routeId),
-          ),
-          ListTile(
-            leading: Icon(Icons.shop),
-            title: Text("address"),
-            onTap: () => Navigator.of(context).pushNamed(AddressScreen.routeId),
-          ),
-          ListTile(
-            leading: Icon(Icons.shop),
-            title: Text("Orders"),
-            onTap: () => Navigator.of(context).pushNamed(OrdersScreen.routeId),
-          ),
-        ],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Divider(),
+            buildDrawerScreens(context, HomePage.routeId, 'Home'),
+            buildDrawerScreens(context, HomePage.routeId, 'Profile'),
+            buildDrawerScreens(context, CartScreen.routeId, 'My Cart'),
+            buildDrawerScreens(context, FavoriteScreen.routeId, 'Favorite'),
+            buildDrawerScreens(context, OrdersScreen.routeId, 'My Orders'),
+            buildDrawerScreens(context, HomePage.routeId, 'Language'),
+            buildDrawerScreens(context, HomePage.routeId, 'Settings'),
+          ],
+        ),
       ),
+    );
+  }
+
+  GestureDetector buildDrawerScreens(
+      BuildContext context, String routeName, String pageName) {
+    return GestureDetector(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Text(
+          pageName,
+          style: TextStyle(
+            fontSize: 22,
+          ),
+        ),
+      ),
+      onTap: () => Navigator.of(context).pushNamed(routeName),
     );
   }
 }
