@@ -38,7 +38,7 @@ class BoltApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         title: "Bolt eCommerce",
         theme: ThemeData(
           primaryIconTheme: IconThemeData(
