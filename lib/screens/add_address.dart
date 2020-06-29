@@ -267,29 +267,26 @@ class _AddAddressState extends State<AddAddress> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: (_saveForm),
-                child: Container(
-                  width: double.infinity,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xff667EEA),
-                        Color(0xff6597F4),
-                        Color(0xff64B0FD),
-                      ],
-                    ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: (_saveForm),
+              child: Container(
+                width: double.infinity,
+                height: 45,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xff667EEA),
+                      Color(0xff6597F4),
+                      Color(0xff64B0FD),
+                    ],
                   ),
-                  child: Center(
-                    child: Text(
-                      "Add Address",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
+                ),
+                child: Center(
+                  child: Text(
+                    "Add Address",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),

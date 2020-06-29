@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:boltecommerce/providers/cart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +46,22 @@ class CartItem extends StatelessWidget {
       confirmDismiss: (direction) {
         return showDialog(
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (context) =>
+          Platform.isAndroid ? CupertinoAlertDialog(
+            title: Text("Are You Sure?"),
+            content: Text("Do You Want to remove the Item From The Cart?"),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text("No"),
+              ),
+              CupertinoDialogAction(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text("Yes"),
+              ),
+            ],
+          ) :
+          AlertDialog(
             title: Text("Are You Sure?"),
             content: Text("Do You Want to remove the Item From The Cart?"),
             actions: <Widget>[
@@ -72,7 +90,7 @@ class CartItem extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 15),
-                  child: Image.asset(
+                  child: Image.network(
                     img,
                     fit: BoxFit.cover,
                   ),

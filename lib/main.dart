@@ -3,6 +3,7 @@ import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/Address_screen.dart';
+import 'package:boltecommerce/screens/EditedProductScreen.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/add_address.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
@@ -14,6 +15,7 @@ import 'package:boltecommerce/screens/loading_screen.dart';
 import 'package:boltecommerce/screens/orders_screen.dart';
 import 'package:boltecommerce/screens/payment_screen.dart';
 import 'package:boltecommerce/screens/product_details.dart';
+import 'package:boltecommerce/screens/user_product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,6 +62,8 @@ class BoltApp extends StatelessWidget {
           CheckOut.routeId: (context) => CheckOut(),
           Confirmation.routeId: (context) => Confirmation(),
           Loading.routeId: (context) => Loading(),
+          UserProduct.routeId:(context) => UserProduct(),
+          EditedProductScreen.routeId:(context) => EditedProductScreen(),
         },
       ),
     );

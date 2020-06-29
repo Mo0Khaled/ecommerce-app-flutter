@@ -33,12 +33,16 @@ class _LoadingState extends State<Loading> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              'assets/images/Logo.png',
-              fit: BoxFit.cover,
-            ),
             Transform.translate(
-              offset: Offset(0, 170),
+              offset: Offset(0, 300),
+              child: Image.asset(
+                'assets/images/Logo.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Center(
                 child: SpinKitFadingCircle(
                   color: Colors.white,

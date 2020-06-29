@@ -3,6 +3,7 @@ import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/orders_screen.dart';
+import 'package:boltecommerce/screens/user_product.dart';
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -20,7 +21,7 @@ class AppDrawer extends StatelessWidget {
             buildDrawerScreens(context, FavoriteScreen.routeId, 'Favorite'),
             buildDrawerScreens(context, OrdersScreen.routeId, 'My Orders'),
             buildDrawerScreens(context, HomePage.routeId, 'Language'),
-            buildDrawerScreens(context, HomePage.routeId, 'Settings'),
+            buildDrawerScreens(context, UserProduct.routeId, 'Settings'),
           ],
         ),
       ),

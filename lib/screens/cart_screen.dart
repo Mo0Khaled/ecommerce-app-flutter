@@ -1,7 +1,6 @@
 import 'package:boltecommerce/providers/cart.dart' show Cart;
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/screens/Address_screen.dart';
-import 'package:boltecommerce/screens/payment_screen.dart';
 import 'package:boltecommerce/widget/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

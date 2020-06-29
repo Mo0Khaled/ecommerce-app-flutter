@@ -20,18 +20,19 @@ class ProductItem extends StatelessWidget {
                   onTap: () => Navigator.of(context).pushNamed(
                       ProductDetails.routeId,
                       arguments: productPro.id),
-                  child: Image.asset(
+                  child: Image.network(
                     productPro.img,
                     fit: BoxFit.cover,
                     width: double.infinity,
                   ),
                 ),
+                Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 5, left: 7),
                   child: Text('\$${productPro.price}'),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 7),
+                  padding: const EdgeInsets.only(left: 7,bottom: 10),
                   child: Text(productPro.title),
                 ),
               ],

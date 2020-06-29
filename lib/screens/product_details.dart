@@ -75,7 +75,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 height: 200,
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: Image.asset(
+                child: Image.network(
                   loadedProduct.img,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -277,6 +277,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 height: 20,
               ),
               Container(
+                padding: EdgeInsets.only(top: 35),
                 child: Row(
                   children: <Widget>[
                     Expanded(

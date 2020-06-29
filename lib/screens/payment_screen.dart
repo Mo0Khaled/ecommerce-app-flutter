@@ -129,8 +129,8 @@ class PaymentScreen extends StatelessWidget {
               ],
             ),
           ),
-          Transform.translate(
-            offset: Offset(0, 1),
+//          Spacer(),
+          Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(

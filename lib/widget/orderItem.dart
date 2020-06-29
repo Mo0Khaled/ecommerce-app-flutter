@@ -66,7 +66,7 @@ class OrderItem extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(right: 15),
-                          child: Image.asset(
+                          child: Image.network(
                             prod.img,
                             fit: BoxFit.cover,
                           ),

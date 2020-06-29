@@ -25,9 +25,11 @@ class FeaturedPage extends StatelessWidget {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 50),
-            child: FeaturedList(_showFavOnly),
+          Transform.translate(
+            offset: Offset(0, 50),
+            child: Container(
+              child: FeaturedList(_showFavOnly),
+            ),
           ),
         ],
       ),

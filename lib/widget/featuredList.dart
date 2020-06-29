@@ -21,7 +21,7 @@ class FeaturedList extends StatelessWidget {
         ),
         itemCount: products.length,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 177,
+          maxCrossAxisExtent: 188,
           childAspectRatio: 3 / 4.4,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
