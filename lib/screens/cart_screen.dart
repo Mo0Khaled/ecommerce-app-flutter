@@ -10,7 +10,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartPro = Provider.of<Cart>(context);
-    final orderPro = Provider.of<Orders>(context, listen: false);
+//    final orderPro = Provider.of<Orders>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -45,9 +45,9 @@ class CartScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () {
-                  orderPro.addOrder(
-                      cartPro.items.values.toList(), cartPro.totalAmount);
-                  cartPro.clear();
+//                  orderPro.addOrderToCheckOut(
+//                      cartPro.items.values.toList(), cartPro.totalAmount);
+//                  cartPro.clear();
                   Navigator.of(context).pushNamed(AddressScreen.routeId);
                 },
                 child: Container(

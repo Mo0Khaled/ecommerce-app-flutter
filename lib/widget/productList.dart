@@ -10,18 +10,35 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<ProductProviders>(context);
-    final products = productData.items;
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-        itemBuilder: (context, index) => ChangeNotifierProvider.value(
-          value: products[index],
-          child: ProductItem(),
-        ),
-        itemCount: products.length,
-        scrollDirection: scrollDirection,
-      ),
+      child: FutureBuilder(
+        future: Provider.of<ProductProviders>(context,listen: false).fetchAndSetProduct(),
+          builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          if (snapshot.error != null) {
+            return Center(
+              child: Text("Error"),
+            );
+          } else {
+            return Consumer<ProductProviders>(
+              builder: (context , prod,_) =>
+                ListView.builder(
+                itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                  value: prod.items[index],
+                  child: ProductItem(),
+                ),
+                itemCount: prod.items.length,
+                scrollDirection: scrollDirection,
+              ),
+            );
+          }
+        }
+      }),
     );
   }
 }

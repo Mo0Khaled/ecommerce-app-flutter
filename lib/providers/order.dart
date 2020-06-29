@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:flutter/foundation.dart';
 
@@ -19,6 +21,7 @@ class Orders with ChangeNotifier {
   List<OrderItemPro> _orders = [];
 
   List<OrderItemPro> get orders => _orders;
+
   double get totalAmount {
     var total = 0.0;
     _orders.forEach((orderItemPro) {
@@ -27,14 +30,60 @@ class Orders with ChangeNotifier {
     return total;
   }
 
-  void addOrder(List<CartItem> cartProduct, double total) {
+  Future<void> fetchAndSetOrders() async {
+    const url = 'https://boltecommerce-11687.firebaseio.com/orders.json';
+    final response = await http.get(url);
+    final List<OrderItemPro> loadedOrder = [];
+    final data = json.decode(response.body) as Map<String, dynamic>;
+    if (data == null) {
+      return;
+    }
+    data.forEach((orderId, orderData) {
+      loadedOrder.add(
+        OrderItemPro(
+          id: orderId,
+          amount: orderData['amount'],
+          products: (orderData['products'] as List<dynamic>)
+              .map(
+                (item) => CartItem(
+                  id: item['id'],
+                  title: item['title'],
+                  quantity: item['quantity'],
+                  price: item['price'],
+                  img: item['img'],
+                ),
+              )
+              .toList(),
+          dateTime: DateTime.parse(orderData['dateTime']),
+        ),
+      );
+    });
+  }
+
+  Future<void> addOrder(List<CartItem> cartProduct, double total) async {
+    final time = DateTime.now();
+    const url = 'https://boltecommerce-11687.firebaseio.com/orders.json';
+    final response = await http.post(url,
+        body: json.encode({
+          'amount': total,
+          'dateTime': time.toIso8601String(),
+          'products': cartProduct
+              .map((cp) => {
+                    'id': cp.id,
+                    'title': cp.title,
+                    'quantity': cp.quantity,
+                    'price': cp.price,
+                    'img': cp.img,
+                  })
+              .toList(),
+        }));
     _orders.insert(
       0,
       OrderItemPro(
-        id: DateTime.now().toString(),
+        id: json.decode(response.body)['name'],
         amount: total,
         products: cartProduct,
-        dateTime: DateTime.now(),
+        dateTime: time,
       ),
     );
     notifyListeners();

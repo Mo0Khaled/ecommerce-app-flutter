@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class Product with ChangeNotifier {
   final String id;
   final String title;
@@ -18,8 +19,26 @@ class Product with ChangeNotifier {
     @required this.price,
     this.isFav = false,
   });
-  void toggleFav() {
+  void _setFavValue(bool newFav){
+    isFav =newFav;
+    notifyListeners();
+  }
+  Future<void> toggleFav() async{
+    final oldStatus =isFav;
     isFav = !isFav;
+    final url =
+        'https://boltecommerce-11687.firebaseio.com/products/$id.json';
+    try{
+        final response = await http.patch(url,body: json.encode({
+          'isFav':isFav,
+        }),);
+        if(response.statusCode >= 400){
+          _setFavValue(oldStatus);
+        }
+    }catch(error){
+      _setFavValue(oldStatus);
+    }
+
     notifyListeners();
   }
 }

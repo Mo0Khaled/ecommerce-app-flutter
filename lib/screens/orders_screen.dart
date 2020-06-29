@@ -8,30 +8,49 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orderPro = Provider.of<Orders>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              "My Orders",
-              style: TextStyle(fontSize: 30),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) =>
-                  OrderItem(orderPro.orders[index]),
-              itemCount: orderPro.orders.length,
-            ),
-          ),
-        ],
+      body: FutureBuilder(
+        future: Provider.of<Orders>(context,listen: false).fetchAndSetOrders(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            if (snapshot.error != null) {
+              return Center(
+                child: Text("error"),
+              );
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      "My Orders",
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  ),
+                  Expanded(
+                    child: Consumer<Orders>(
+                      builder: (context,orderPro,_) =>
+                       ListView.builder(
+                        itemBuilder: (context, index) =>
+                            OrderItem(orderPro.orders[index]),
+                        itemCount: orderPro.orders.length,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+          }
+        },
       ),
     );
   }

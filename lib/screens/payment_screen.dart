@@ -1,3 +1,4 @@
+import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/screens/check_out.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class PaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderPro = Provider.of<Orders>(context);
+    final cartPro = Provider.of<Cart>(context,listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +79,7 @@ class PaymentScreen extends StatelessWidget {
                       "Subtotal",
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    Text("\$${orderPro.totalAmount}"),
+                    Text("\$${cartPro.totalAmount}"),
                   ],
                 ),
                 SizedBox(
@@ -123,7 +125,7 @@ class PaymentScreen extends StatelessWidget {
                       "Total",
                       style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
-                    Text("\$${orderPro.totalAmount}"),
+                    Text("\$${cartPro.totalAmount}"),
                   ],
                 ),
               ],

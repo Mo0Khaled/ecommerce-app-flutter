@@ -1,7 +1,7 @@
+import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/screens/confirmation.dart';
 import 'package:boltecommerce/widget/checkOut_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +11,8 @@ class CheckOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderPro = Provider.of<Orders>(context);
+    final cartPro = Provider.of<Cart>(context,listen: false);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -32,9 +34,15 @@ class CheckOut extends StatelessWidget {
               height: 300,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: ListView.builder(
-                itemBuilder: (context, index) =>
-                    CheckOutItem(orderPro.orders[index]),
-                itemCount: orderPro.orders.length,
+                itemBuilder: (context, index) => CheckOutItem(
+                  title: cartPro.items.values.toList()[index].title,
+                  id: cartPro.items.values.toList()[index].id,
+                  img: cartPro.items.values.toList()[index].img,
+                  price: cartPro.items.values.toList()[index].price,
+                  quantity: cartPro.items.values.toList()[index].quantity,
+                  productId: cartPro.items.keys.toList()[index],
+                ),
+                itemCount: cartPro.items.length,
               ),
             ),
             Container(
@@ -49,7 +57,7 @@ class CheckOut extends StatelessWidget {
                         "Subtotal",
                         style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
-                      Text("\$${orderPro.totalAmount}"),
+                      Text("\$${cartPro.totalAmount.toStringAsFixed(2)}"),
                     ],
                   ),
                   SizedBox(
@@ -95,7 +103,7 @@ class CheckOut extends StatelessWidget {
                         "Total",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
-                      Text("\$${orderPro.totalAmount}"),
+                      Text("\$${cartPro.totalAmount.toStringAsFixed(2)}"),
                     ],
                   ),
                 ],
@@ -106,32 +114,66 @@ class CheckOut extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context)
-                      .pushReplacementNamed(Confirmation.routeId),
-                  child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xff667EEA),
-                          Color(0xff6597F4),
-                          Color(0xff64B0FD),
-                        ],
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Buy",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ),
-                  ),
-                ),
+                child: OrderButton(orderPro: orderPro, cartPro: cartPro),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    Key key,
+    @required this.orderPro,
+    @required this.cartPro,
+  }) : super(key: key);
+
+  final Orders orderPro;
+  final Cart cartPro;
+
+  @override
+  _OrderButtonState createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  var _isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (widget.cartPro.totalAmount <= 0 || _isLoading)  ? null :
+          () async {
+        setState(() {
+          _isLoading =true;
+        });
+       await widget.orderPro.addOrder(
+            widget.cartPro.items.values.toList(), widget.cartPro.totalAmount);
+        widget.cartPro.clear();
+        Navigator.of(context)
+            .pushReplacementNamed(Confirmation.routeId);
+        setState(() {
+          _isLoading = false;
+        });
+      },
+      child: Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xff667EEA),
+              Color(0xff6597F4),
+              Color(0xff64B0FD),
+            ],
+          ),
+        ),
+        child: Center(
+          child: _isLoading ? CircularProgressIndicator() : Text(
+            "Buy",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
         ),
       ),
     );
