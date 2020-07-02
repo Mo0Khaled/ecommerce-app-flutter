@@ -1,8 +1,10 @@
 import 'package:boltecommerce/providers/addressProvider.dart';
+import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/Address_screen.dart';
+import 'package:boltecommerce/screens/Authentication_screen.dart';
 import 'package:boltecommerce/screens/EditedProductScreen.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/add_address.dart';
@@ -27,7 +29,14 @@ class BoltApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ProductProviders(),
+          create: (context) => Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, ProductProviders>(
+          update: (ctx, auth, previousProducts) => ProductProviders(
+            auth.token,
+            auth.userId,
+            previousProducts == null ? [] : previousProducts.items,
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) => Cart(),
@@ -39,32 +48,35 @@ class BoltApp extends StatelessWidget {
           create: (context) => Orders(),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Bolt eCommerce",
-        theme: ThemeData(
-          primaryIconTheme: IconThemeData(
-            color: Colors.black,
+      child: Consumer<Auth>(
+        builder: (context, auth, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: "Bolt eCommerce",
+          theme: ThemeData(
+            primaryIconTheme: IconThemeData(
+              color: Colors.black,
+            ),
+            primaryColor: Colors.grey,
           ),
-          primaryColor: Colors.grey,
+          home: auth.isAuth ? HomePage() : AuthenticationScreen(),
+//        initialRoute: Loading.routeId,
+          routes: {
+            HomePage.routeId: (context) => HomePage(),
+            FeaturedPage.routeId: (context) => FeaturedPage(),
+            ProductDetails.routeId: (context) => ProductDetails(),
+            CartScreen.routeId: (context) => CartScreen(),
+            FavoriteScreen.routeId: (context) => FavoriteScreen(),
+            AddressScreen.routeId: (context) => AddressScreen(),
+            AddAddress.routeId: (context) => AddAddress(),
+            OrdersScreen.routeId: (context) => OrdersScreen(),
+            PaymentScreen.routeId: (context) => PaymentScreen(),
+            CheckOut.routeId: (context) => CheckOut(),
+            Confirmation.routeId: (context) => Confirmation(),
+            Loading.routeId: (context) => Loading(),
+            UserProduct.routeId: (context) => UserProduct(),
+            EditedProductScreen.routeId: (context) => EditedProductScreen(),
+          },
         ),
-        initialRoute: Loading.routeId,
-        routes: {
-          HomePage.routeId: (context) => HomePage(),
-          FeaturedPage.routeId: (context) => FeaturedPage(),
-          ProductDetails.routeId: (context) => ProductDetails(),
-          CartScreen.routeId: (context) => CartScreen(),
-          FavoriteScreen.routeId: (context) => FavoriteScreen(),
-          AddressScreen.routeId: (context) => AddressScreen(),
-          AddAddress.routeId: (context) => AddAddress(),
-          OrdersScreen.routeId: (context) => OrdersScreen(),
-          PaymentScreen.routeId: (context) => PaymentScreen(),
-          CheckOut.routeId: (context) => CheckOut(),
-          Confirmation.routeId: (context) => Confirmation(),
-          Loading.routeId: (context) => Loading(),
-          UserProduct.routeId:(context) => UserProduct(),
-          EditedProductScreen.routeId:(context) => EditedProductScreen(),
-        },
       ),
     );
   }

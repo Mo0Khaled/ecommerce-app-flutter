@@ -23,11 +23,11 @@ class Product with ChangeNotifier {
     isFav =newFav;
     notifyListeners();
   }
-  Future<void> toggleFav() async{
+  Future<void> toggleFav(String token,String userId) async{
     final oldStatus =isFav;
     isFav = !isFav;
     final url =
-        'https://boltecommerce-11687.firebaseio.com/products/$id.json';
+        'https://boltecommerce-11687.firebaseio.com/userFavorite/$userId/$id.json?auth=$token';
     try{
         final response = await http.patch(url,body: json.encode({
           'isFav':isFav,

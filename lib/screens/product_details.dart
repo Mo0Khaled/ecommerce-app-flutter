@@ -1,3 +1,4 @@
+import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
@@ -36,6 +37,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final orderPro = Provider.of<Orders>(context, listen: false);
     const activeCardColor = Color(0xff667EEA);
     const inActiveColor = Color(0xffE1E1E1);
+    final authData = Provider.of<Auth>(context,listen: false);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -49,7 +51,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             color: Colors.red,
             onPressed: () {
               setState(() {
-                loadedProduct.toggleFav();
+                loadedProduct.toggleFav(authData.token,authData.userId);
               });
             },
           ),

@@ -34,8 +34,16 @@ class ProductProviders with ChangeNotifier {
 //      price: 45.5,
 //    ),
   ];
+  final String authToken;
+  final String userId ;
+  ProductProviders(this.authToken,this.userId,this._items);
 
   List<Product> get items => _items;
+//  final String authToken;
+////  final String userId;
+////
+////
+//  ProductProviders( this.authToken , this._items);
 
   Product findById(String id) => _items.firstWhere((prod) => prod.id == id);
 
@@ -43,13 +51,19 @@ class ProductProviders with ChangeNotifier {
       _items.where((prodItem) => prodItem.isFav).toList();
 
   Future<void> fetchAndSetProduct() async {
-    const url = 'https://boltecommerce-11687.firebaseio.com/products.json';
+//    final filter = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    var url = 'https://boltecommerce-11687.firebaseio.com/products.json?auth=$authToken';
     try {
       final response = await http.get(url);
       final data = json.decode(response.body) as Map<String, dynamic>;
       if (data == null) {
-        return;
+        return ;
       }
+
+       url =
+          'https://boltecommerce-11687.firebaseio.com/userFavorite/$userId.json?auth=$authToken';
+      final favResponse = await http.get(url);
+      final favData = json.decode(favResponse.body);
       final List<Product> loadedProduct = [];
       data.forEach((productId, productData) {
         loadedProduct.add(
@@ -60,11 +74,11 @@ class ProductProviders with ChangeNotifier {
             description: productData['description'],
             img: productData['img'],
             price: productData['price'],
-            isFav: productData['isFav'],
+            isFav: favData == null ? false : favData[productId] ?? false,
           ),
         );
       });
-      _items =loadedProduct;
+      _items = loadedProduct;
       notifyListeners();
     } catch (error) {
       throw error;
@@ -72,7 +86,7 @@ class ProductProviders with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const url = 'https://boltecommerce-11687.firebaseio.com/products.json';
+    final url = 'https://boltecommerce-11687.firebaseio.com/products.json?auth=$authToken';
     try {
       final response = await http.post(
         url,
@@ -83,6 +97,7 @@ class ProductProviders with ChangeNotifier {
           'img': product.img,
           'price': product.price,
           'isFav': product.isFav,
+          'creatorId': userId,
         }),
       );
       final newProduct = Product(
@@ -104,7 +119,7 @@ class ProductProviders with ChangeNotifier {
     final productIndex = _items.indexWhere((newProduct) => newProduct.id == id);
     if (productIndex >= 0) {
       final url =
-          'https://boltecommerce-11687.firebaseio.com/products/$id.json';
+          'https://boltecommerce-11687.firebaseio.com/products/$id.json?auth=$authToken';
       await http.patch(
         url,
         body: json.encode({
@@ -125,7 +140,7 @@ class ProductProviders with ChangeNotifier {
   Future<void> deleteProduct(String id)async {
 
     final url =
-        'https://boltecommerce-11687.firebaseio.com/products/$id.json';
+        'https://boltecommerce-11687.firebaseio.com/products/$id.json?auth=$authToken';
 
       final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
       var existingProduct = _items[existingProductIndex];
