@@ -1,11 +1,13 @@
 import 'package:boltecommerce/providers/cart.dart' show Cart;
 import 'package:boltecommerce/screens/Address_screen.dart';
+import 'package:boltecommerce/screens/featured.dart';
 import 'package:boltecommerce/widget/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeId = "/Cart";
+
   @override
   Widget build(BuildContext context) {
     final cartPro = Provider.of<Cart>(context);
@@ -26,17 +28,37 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) => CartItem(
-                title: cartPro.items.values.toList()[index].title,
-                id: cartPro.items.values.toList()[index].id,
-                img: cartPro.items.values.toList()[index].img,
-                price: cartPro.items.values.toList()[index].price,
-                quantity: cartPro.items.values.toList()[index].quantity,
-                productId: cartPro.items.keys.toList()[index],
-              ),
-              itemCount: cartPro.items.length,
-            ),
+            child: cartPro.itemCount <= 0
+                ? Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "No Item .. ",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        InkWell(
+                          child: Text(
+                            "Let's Shopping?",
+                            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                          ),
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(FeaturedPage.routeId),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) => CartItem(
+                      title: cartPro.items.values.toList()[index].title,
+                      id: cartPro.items.values.toList()[index].id,
+                      img: cartPro.items.values.toList()[index].img,
+                      price: cartPro.items.values.toList()[index].price,
+                      quantity: cartPro.items.values.toList()[index].quantity,
+                      productId: cartPro.items.keys.toList()[index],
+                    ),
+                    itemCount: cartPro.items.length,
+                  ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -71,7 +93,6 @@ class CartScreen extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );

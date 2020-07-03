@@ -26,12 +26,13 @@ class Product with ChangeNotifier {
   Future<void> toggleFav(String token,String userId) async{
     final oldStatus =isFav;
     isFav = !isFav;
+    notifyListeners();
     final url =
         'https://boltecommerce-11687.firebaseio.com/userFavorite/$userId/$id.json?auth=$token';
     try{
-        final response = await http.patch(url,body: json.encode({
-          'isFav':isFav,
-        }),);
+        final response = await http.put(url,body: json.encode(
+          isFav,
+        ),);
         if(response.statusCode >= 400){
           _setFavValue(oldStatus);
         }
@@ -39,6 +40,5 @@ class Product with ChangeNotifier {
       _setFavValue(oldStatus);
     }
 
-    notifyListeners();
   }
 }

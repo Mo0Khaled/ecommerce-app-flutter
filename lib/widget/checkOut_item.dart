@@ -1,8 +1,4 @@
-import 'package:boltecommerce/providers/cart.dart';
-import 'package:boltecommerce/providers/order.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 class CheckOutItem extends StatelessWidget {
   final String id;
   final String productId;

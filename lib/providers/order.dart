@@ -19,6 +19,9 @@ class OrderItemPro {
 
 class Orders with ChangeNotifier {
   List<OrderItemPro> _orders = [];
+  final String authToken;
+  final String userId;
+  Orders(this.authToken,this.userId, this._orders);
 
   List<OrderItemPro> get orders => _orders;
 
@@ -31,7 +34,7 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchAndSetOrders() async {
-    const url = 'https://boltecommerce-11687.firebaseio.com/orders.json';
+    final url = 'https://boltecommerce-11687.firebaseio.com/orders/$userId.json?auth=$authToken';
     final response = await http.get(url);
     final List<OrderItemPro> loadedOrder = [];
     final data = json.decode(response.body) as Map<String, dynamic>;
@@ -58,11 +61,13 @@ class Orders with ChangeNotifier {
         ),
       );
     });
+    _orders =loadedOrder.reversed.toList();
+    notifyListeners();
   }
 
   Future<void> addOrder(List<CartItem> cartProduct, double total) async {
     final time = DateTime.now();
-    const url = 'https://boltecommerce-11687.firebaseio.com/orders.json';
+    final url = 'https://boltecommerce-11687.firebaseio.com/orders/$userId.json?auth=$authToken';
     final response = await http.post(url,
         body: json.encode({
           'amount': total,

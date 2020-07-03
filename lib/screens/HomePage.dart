@@ -1,5 +1,7 @@
 import 'package:boltecommerce/providers/cart.dart';
+import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
+import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/featured.dart';
 import 'package:boltecommerce/widget/app_drawer.dart';
 import 'package:boltecommerce/widget/badge.dart';
@@ -16,7 +18,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
+          IconButton(icon: Icon(Icons.favorite_border), onPressed: () =>Navigator.of(context).pushNamed(FavoriteScreen.routeId),),
           Consumer<Cart>(
             builder: (context, cartPro, ch) => Badge(
               value: cartPro.itemCount.toString(),
@@ -29,92 +31,95 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-              child: Card(
-                elevation: 10,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 30,
+      body: RefreshIndicator(
+        onRefresh: ()=> Provider.of<ProductProviders>(context,listen: false).fetchAndSetProduct(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                child: Card(
+                  elevation: 10,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: Icon(
+                        Icons.search,
+                        size: 30,
+                      ),
+                      focusColor: Colors.black,
+                      hintText: 'Search Your Product',
+                      filled: true,
+                      fillColor: Colors.white,
                     ),
-                    focusColor: Colors.black,
-                    hintText: 'Search Your Product',
-                    filled: true,
-                    fillColor: Colors.white,
                   ),
                 ),
               ),
-            ),
-            buildTitle(
-              title: "Categories",
-              onPressed: () {},
-            ),
-            Container(
-              width: double.infinity,
-              height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  buildCategory(
-                    img: "assets/images/woman.png",
-                    name: "Woman",
-                    onTap: () {},
-                    left: 25,
-                    color1: Color(0xff6681EB),
-                    color2: Color(0xff6590F1),
-                    color3: Color(0xff64A8FA),
-                  ),
-                  buildCategory(
-                    img: "assets/images/man.png",
-                    name: "Man",
-                    onTap: () {},
-                    left: 35,
-                    color1: Color(0xffFF5858),
-                    color2: Color(0xffFE5870),
-                    color3: Color(0xffFC588A),
-                  ),
-                  buildCategory(
-                    img: "assets/images/kid.png",
-                    name: "Kids",
-                    onTap: () {},
-                    left: 35,
-                    color1: Color(0xff43E97B),
-                    color2: Color(0xff3EEFA0),
-                    color3: Color(0xff3AF6C8),
-                  ),
-                ],
+              buildTitle(
+                title: "Categories",
+                onPressed: () {},
               ),
-            ),
-            buildTitle(
-              title: "Featured",
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(FeaturedPage.routeId),
-            ),
-            Container(
-              width: double.infinity,
-              height: 260,
-              child: ProductList(
-                scrollDirection: Axis.horizontal,
+              Container(
+                width: double.infinity,
+                height: 100,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    buildCategory(
+                      img: "assets/images/woman.png",
+                      name: "Woman",
+                      onTap: () {},
+                      left: 25,
+                      color1: Color(0xff6681EB),
+                      color2: Color(0xff6590F1),
+                      color3: Color(0xff64A8FA),
+                    ),
+                    buildCategory(
+                      img: "assets/images/man.png",
+                      name: "Man",
+                      onTap: () {},
+                      left: 35,
+                      color1: Color(0xffFF5858),
+                      color2: Color(0xffFE5870),
+                      color3: Color(0xffFC588A),
+                    ),
+                    buildCategory(
+                      img: "assets/images/kid.png",
+                      name: "Kids",
+                      onTap: () {},
+                      left: 35,
+                      color1: Color(0xff43E97B),
+                      color2: Color(0xff3EEFA0),
+                      color3: Color(0xff3AF6C8),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            buildTitle(
-              title: "Best Sell",
-              onPressed: () {},
-            ),
-            Container(
-              width: double.infinity,
-              height: 260,
-              child: ProductList(
-                scrollDirection: Axis.horizontal,
+              buildTitle(
+                title: "Featured",
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(FeaturedPage.routeId),
               ),
-            ),
-          ],
+              Container(
+                width: double.infinity,
+                height: 270,
+                child: ProductList(
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
+              buildTitle(
+                title: "Best Sell",
+                onPressed: () {},
+              ),
+              Container(
+                width: double.infinity,
+                height: 270,
+                child: ProductList(
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

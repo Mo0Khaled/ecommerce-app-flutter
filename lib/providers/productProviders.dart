@@ -20,7 +20,7 @@ class ProductProviders with ChangeNotifier {
 //      title: 'Woman T-Shirt',
 //      review: 2.5,
 //      description:
-//          'A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.',
+//          'A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy wit h my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.',
 //      img: 'assets/images/t2.png',
 //      price: 35.2,
 //    ),
@@ -37,31 +37,21 @@ class ProductProviders with ChangeNotifier {
   final String authToken;
   final String userId ;
   ProductProviders(this.authToken,this.userId,this._items);
-
   List<Product> get items => _items;
-//  final String authToken;
-////  final String userId;
-////
-////
-//  ProductProviders( this.authToken , this._items);
-
   Product findById(String id) => _items.firstWhere((prod) => prod.id == id);
-
   List<Product> get favItems =>
       _items.where((prodItem) => prodItem.isFav).toList();
 
-  Future<void> fetchAndSetProduct() async {
-//    final filter = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
-    var url = 'https://boltecommerce-11687.firebaseio.com/products.json?auth=$authToken';
+  Future<void> fetchAndSetProduct([bool filterByUser = false]) async {
+    final filter = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    var url = 'https://boltecommerce-11687.firebaseio.com/products.json?auth=$authToken&$filter';
     try {
       final response = await http.get(url);
       final data = json.decode(response.body) as Map<String, dynamic>;
       if (data == null) {
-        return ;
+        return;
       }
-
-       url =
-          'https://boltecommerce-11687.firebaseio.com/userFavorite/$userId.json?auth=$authToken';
+      url = 'https://boltecommerce-11687.firebaseio.com/userFavorite/$userId.json?auth=$authToken';
       final favResponse = await http.get(url);
       final favData = json.decode(favResponse.body);
       final List<Product> loadedProduct = [];
@@ -78,7 +68,8 @@ class ProductProviders with ChangeNotifier {
           ),
         );
       });
-      _items = loadedProduct;
+      _items = loadedProduct.reversed.toList();
+
       notifyListeners();
     } catch (error) {
       throw error;
@@ -154,4 +145,5 @@ class ProductProviders with ChangeNotifier {
       }
       existingProduct = null;
     }
+
 }

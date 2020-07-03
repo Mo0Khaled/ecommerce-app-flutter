@@ -1,6 +1,5 @@
 import 'package:boltecommerce/model/http_exception.dart';
 import 'package:boltecommerce/providers/auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,11 +29,7 @@ void _showErrorDialog(String message){
     ],
   ),);
 }
-  @override
-  void dispose() {
-    _passwordController.dispose();
-    super.dispose();
-  }
+
   Future<void> _submit()async{
     if(!_formKey.currentState.validate()){
       return;
@@ -155,7 +150,8 @@ void _showErrorDialog(String message){
                                       return "Password don't match";
                                     }
                                   }
-                                : null),
+                                : null,
+                        ),
                       SizedBox(
                         height: 20,
                       ),

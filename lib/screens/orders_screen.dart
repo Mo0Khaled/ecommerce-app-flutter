@@ -26,27 +26,30 @@ class OrdersScreen extends StatelessWidget {
                 child: Text("error"),
               );
             } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      "My Orders",
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-                  Expanded(
-                    child: Consumer<Orders>(
-                      builder: (context,orderPro,_) =>
-                       ListView.builder(
-                        itemBuilder: (context, index) =>
-                            OrderItem(orderPro.orders[index]),
-                        itemCount: orderPro.orders.length,
+              return RefreshIndicator(
+                onRefresh: ()=> Provider.of<Orders>(context,listen: false).fetchAndSetOrders(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text(
+                        "My Orders",
+                        style: TextStyle(fontSize: 30),
                       ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: Consumer<Orders>(
+                        builder: (context,orderPro,_) =>
+                         ListView.builder(
+                          itemBuilder: (context, index) =>
+                              OrderItem(orderPro.orders[index]),
+                          itemCount: orderPro.orders.length,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
           }

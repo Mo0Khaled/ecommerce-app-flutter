@@ -16,7 +16,8 @@ class FeaturedPage extends StatelessWidget {
           IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
         ],
       ),
-      body: Stack(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -25,8 +26,7 @@ class FeaturedPage extends StatelessWidget {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),
-          Transform.translate(
-            offset: Offset(0, 50),
+          Expanded(
             child: Container(
               child: FeaturedList(_showFavOnly),
             ),

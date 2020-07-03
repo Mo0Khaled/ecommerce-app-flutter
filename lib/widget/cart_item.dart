@@ -77,7 +77,7 @@ class CartItem extends StatelessWidget {
           ),
         );
       },
-      child: Card(
+      child:  Card(
         margin: EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
@@ -90,9 +90,12 @@ class CartItem extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 15),
-                  child: Image.network(
-                    img,
-                    fit: BoxFit.cover,
+                  child: Container(
+                    width: 120,
+                    child: Image.network(
+                      img,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Column(

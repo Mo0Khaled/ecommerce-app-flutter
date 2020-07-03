@@ -2,6 +2,7 @@ import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
+import 'package:boltecommerce/providers/product.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/Authentication_screen.dart';
@@ -29,7 +30,10 @@ class BoltApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => Auth(),
+          create: (ctx) => Auth(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Product(),
         ),
         ChangeNotifierProxyProvider<Auth, ProductProviders>(
           update: (ctx, auth, previousProducts) => ProductProviders(
@@ -39,13 +43,17 @@ class BoltApp extends StatelessWidget {
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) => Cart(),
+          create: (ctx) => Cart(),
         ),
         ChangeNotifierProvider(
-          create: (context) => AddressProvider(),
+          create: (ctx) => AddressProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => Orders(),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          update: (ctx, auth, previousOrders) => Orders(
+            auth.token,
+            auth.userId,
+            previousOrders == null ? [] : previousOrders.orders,
+          ),
         ),
       ],
       child: Consumer<Auth>(
@@ -58,7 +66,15 @@ class BoltApp extends StatelessWidget {
             ),
             primaryColor: Colors.grey,
           ),
-          home: auth.isAuth ? HomePage() : AuthenticationScreen(),
+          home:  auth.isAuth
+              ? HomePage()
+              : FutureBuilder(
+            future: auth.tryAutoLogin(),
+            builder: (context, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Loading()
+                : AuthenticationScreen(),
+          ),
 //        initialRoute: Loading.routeId,
           routes: {
             HomePage.routeId: (context) => HomePage(),

@@ -1,4 +1,8 @@
+import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
+import 'package:boltecommerce/providers/product.dart';
+import 'package:boltecommerce/providers/productProviders.dart';
+import 'package:boltecommerce/screens/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +15,7 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dismissProd = Provider.of<Orders>(context, listen: false);
-
+    final id = Provider.of<Product>(context).id;
     return Column(
       children: order.products
           .map(
@@ -66,9 +70,12 @@ class OrderItem extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(right: 15),
-                          child: Image.network(
-                            prod.img,
-                            fit: BoxFit.cover,
+                          child: Container(
+                            width: 120,
+                            child: Image.network(
+                              prod.img,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         Column(
@@ -94,23 +101,30 @@ class OrderItem extends StatelessWidget {
                             ),
                             Transform.translate(
                               offset: Offset(0, 8),
-                              child: Container(
-                                width: 114,
-                                height: 39,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Color(0xff667EEA),
-                                      Color(0xff6597F4),
-                                      Color(0xff64B0FD),
-                                    ],
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Order Again",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 15),
+                              child: Consumer<ProductProviders>(
+                                builder:(ctx,l,_) =>InkWell(
+                                  onTap: ()=> Navigator.of(context).pushNamed(
+                                      ProductDetails.routeId,
+                                      arguments: l.findById(id)),
+                                  child: Container(
+                                    width: 114,
+                                    height: 39,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0xff667EEA),
+                                          Color(0xff6597F4),
+                                          Color(0xff64B0FD),
+                                        ],
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Order Again",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),

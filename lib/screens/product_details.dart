@@ -32,7 +32,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 //    final loadedProduct = Provider.of<Product>(context);
     final productId = ModalRoute.of(context).settings.arguments as String;
     final loadedProduct =
-        Provider.of<ProductProviders>(context).findById(productId);
+        Provider.of<ProductProviders>(context,listen: false).findById(productId);
     final cartPro = Provider.of<Cart>(context, listen: false);
     final orderPro = Provider.of<Orders>(context, listen: false);
     const activeCardColor = Color(0xff667EEA);

@@ -20,10 +20,13 @@ class ProductItem extends StatelessWidget {
                   onTap: () => Navigator.of(context).pushNamed(
                       ProductDetails.routeId,
                       arguments: productPro.id),
-                  child: Image.network(
-                    productPro.img,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
+                  child: Container(
+                    height: 185,
+                    child: Image.network(
+                      productPro.img,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
                   ),
                 ),
                 Spacer(),

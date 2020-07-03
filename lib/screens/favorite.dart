@@ -1,3 +1,4 @@
+import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/widget/featuredList.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,12 @@ class FavoriteScreen extends StatelessWidget {
 //          onPressed: () { },
 //        ),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
-          IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
+          Icon(Icons.favorite,color: Colors.red,),
+          IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => Navigator.of(context).pushNamed(CartScreen.routeId),),
         ],
       ),
-      body: Stack(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -28,9 +30,10 @@ class FavoriteScreen extends StatelessWidget {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 50),
-            child: FeaturedList(_showFavOnly),
+          Expanded(
+            child: Container(
+              child: FeaturedList(_showFavOnly),
+            ),
           ),
         ],
       ),
