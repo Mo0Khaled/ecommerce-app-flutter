@@ -2,7 +2,6 @@ import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
-import 'package:boltecommerce/providers/product.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/Authentication_screen.dart';
@@ -32,9 +31,7 @@ class BoltApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Product(),
-        ),
+
         ChangeNotifierProxyProvider<Auth, ProductProviders>(
           update: (ctx, auth, previousProducts) => ProductProviders(
             auth.token,

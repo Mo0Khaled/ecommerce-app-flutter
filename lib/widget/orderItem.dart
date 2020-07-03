@@ -1,4 +1,3 @@
-import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/providers/product.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
