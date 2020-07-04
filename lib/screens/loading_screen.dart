@@ -1,6 +1,10 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'HomePage.dart';
 class Loading extends StatefulWidget {
   static const routeId = '/loading';
   @override
@@ -8,14 +12,14 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-//  @override
-//  void initState() {
-//    Timer(
-//      Duration(seconds: 3),
-//      () => Navigator.of(context).pushReplacementNamed(HomePage.routeId),
-//    );
-//    super.initState();
-//  }
+  @override
+  void initState() {
+    Timer(
+      Duration(seconds: 2),
+      ()async => await Navigator.of(context).pushReplacementNamed(HomePage.routeId),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

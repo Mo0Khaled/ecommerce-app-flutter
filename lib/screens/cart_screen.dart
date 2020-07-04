@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart' show Cart;
 import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/featured.dart';
@@ -11,6 +12,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartPro = Provider.of<Cart>(context);
+    final translate = AppLocale.of(context);
 //    final orderPro = Provider.of<Orders>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +25,7 @@ class CartScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15),
             child: Text(
-              "Cart",
+              translate.getTranslated('cart'),
               style: TextStyle(fontSize: 30, letterSpacing: 1),
             ),
           ),
@@ -34,12 +36,12 @@ class CartScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "No Item .. ",
+                          translate.getTranslated('no_item'),
                           style: TextStyle(fontSize: 18),
                         ),
                         InkWell(
                           child: Text(
-                            "Let's Shopping?",
+                            translate.getTranslated('lets_shopping'),
                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                           ),
                           onTap: () => Navigator.of(context)
@@ -85,7 +87,7 @@ class CartScreen extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      "Continue",
+                      translate.getTranslated("continue"),
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/screens/check_out.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class PaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartPro = Provider.of<Cart>(context,listen: false);
+    final translate = AppLocale.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -20,7 +22,7 @@ class PaymentScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              "Payment",
+             translate.getTranslated('payment'),
               style: TextStyle(fontSize: 30),
             ),
           ),
@@ -73,7 +75,7 @@ class PaymentScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Subtotal",
+                      translate.getTranslated('subtotal'),
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
                     Text("\$${cartPro.totalAmount}"),
@@ -86,7 +88,7 @@ class PaymentScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Discount",
+                      translate.getTranslated('discount'),
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
                     Text("0.0"),
@@ -99,7 +101,7 @@ class PaymentScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Shipping",
+                      translate.getTranslated('shipping'),
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
                     Text("0.0"),
@@ -119,7 +121,7 @@ class PaymentScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Total",
+                      translate.getTranslated('total'),
                       style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
                     Text("\$${cartPro.totalAmount}"),
@@ -151,7 +153,7 @@ class PaymentScreen extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        "Checkout",
+                        translate.getTranslated('check_out'),
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),

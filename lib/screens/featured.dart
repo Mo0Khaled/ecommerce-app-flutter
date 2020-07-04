@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/widget/featuredList.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +6,8 @@ class FeaturedPage extends StatelessWidget {
   static const routeId = "/Featured";
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
+
     var _showFavOnly = false;
     return Scaffold(
       appBar: AppBar(
@@ -22,7 +25,7 @@ class FeaturedPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              "Featured",
+              translate.getTranslated('featured'),
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),

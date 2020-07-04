@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/screens/add_address.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class AddressItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
+
     final deleteAddress = Provider.of<AddressProvider>(context, listen: false);
     return GestureDetector(
       onLongPress: () =>
@@ -38,16 +41,16 @@ class AddressItem extends StatelessWidget {
           return showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text("Are You Sure?"),
-              content: Text("Do You Want to remove the Item From The Cart?"),
+              title: Text(translate.getTranslated('title_remove_someThing')),
+              content: Text(translate.getTranslated('remove_address_alert')),
               actions: <Widget>[
                 FlatButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: Text("No"),
+                  child: Text(translate.getTranslated('no')),
                 ),
                 FlatButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: Text("Yes"),
+                  child: Text(translate.getTranslated('yes')),
                 ),
               ],
             ),

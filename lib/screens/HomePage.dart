@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatelessWidget {
   static const routeId = '/Home';
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
@@ -48,7 +50,7 @@ class HomePage extends StatelessWidget {
                         size: 30,
                       ),
                       focusColor: Colors.black,
-                      hintText: 'Search Your Product',
+                      hintText: translate.getTranslated('search'),
                       filled: true,
                       fillColor: Colors.white,
                     ),
@@ -56,8 +58,9 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               buildTitle(
-                title: "Categories",
+                title:translate.getTranslated('category'),
                 onPressed: () {},
+                context: context,
               ),
               Container(
                 width: double.infinity,
@@ -67,7 +70,7 @@ class HomePage extends StatelessWidget {
                   children: <Widget>[
                     buildCategory(
                       img: "assets/images/woman.png",
-                      name: "Woman",
+                      name: translate.getTranslated('woman_category'),
                       onTap: () {},
                       left: 25,
                       color1: Color(0xff6681EB),
@@ -76,7 +79,7 @@ class HomePage extends StatelessWidget {
                     ),
                     buildCategory(
                       img: "assets/images/man.png",
-                      name: "Man",
+                      name: translate.getTranslated('man_category'),
                       onTap: () {},
                       left: 35,
                       color1: Color(0xffFF5858),
@@ -85,7 +88,7 @@ class HomePage extends StatelessWidget {
                     ),
                     buildCategory(
                       img: "assets/images/kid.png",
-                      name: "Kids",
+                      name: translate.getTranslated('kids_category'),
                       onTap: () {},
                       left: 35,
                       color1: Color(0xff43E97B),
@@ -96,9 +99,10 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               buildTitle(
-                title: "Featured",
+                title: translate.getTranslated('featured'),
                 onPressed: () =>
                     Navigator.of(context).pushNamed(FeaturedPage.routeId),
+                context: context,
               ),
               Container(
                 width: double.infinity,
@@ -108,8 +112,9 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               buildTitle(
-                title: "Best Sell",
+                title: translate.getTranslated('best_sell'),
                 onPressed: () {},
+                context: context,
               ),
               Container(
                 width: double.infinity,
@@ -125,7 +130,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Padding buildTitle({String title, Function onPressed}) {
+  Padding buildTitle({String title, Function onPressed,BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Row(
@@ -138,7 +143,7 @@ class HomePage extends StatelessWidget {
           FlatButton(
             onPressed: onPressed,
             child: Text(
-              'See All',
+              AppLocale.of(context).getTranslated('see_all'),
               style: TextStyle(color: Colors.grey),
             ),
           ),

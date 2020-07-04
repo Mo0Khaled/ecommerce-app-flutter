@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/address.dart';
 import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,7 @@ class _AddAddressState extends State<AddAddress> {
 
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -92,7 +94,7 @@ class _AddAddressState extends State<AddAddress> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              "Create Address",
+              translate.getTranslated('create_address'),
               style: TextStyle(fontSize: 30),
             ),
           ),
@@ -108,7 +110,7 @@ class _AddAddressState extends State<AddAddress> {
                     ),
                     child: TextFormField(
                       initialValue: _initValues['name'],
-                      decoration: InputDecoration(labelText: 'Name'),
+                      decoration: InputDecoration(labelText: translate.getTranslated('name')),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context)
@@ -116,7 +118,7 @@ class _AddAddressState extends State<AddAddress> {
                       },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return 'Please Enter a Name';
+                          return translate.getTranslated('validate_name');
                         } else {
                           return null;
                         }
@@ -140,14 +142,14 @@ class _AddAddressState extends State<AddAddress> {
                     ),
                     child: TextFormField(
                       initialValue: _initValues['address'],
-                      decoration: InputDecoration(labelText: 'Address lane'),
+                      decoration: InputDecoration(labelText: translate.getTranslated('address_line')),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_cityFocusNode);
                       },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return 'Please Enter a Address lane';
+                          return translate.getTranslated('validate_address');
                         } else {
                           return null;
                         }
@@ -171,7 +173,7 @@ class _AddAddressState extends State<AddAddress> {
                     ),
                     child: TextFormField(
                       initialValue: _initValues['city'],
-                      decoration: InputDecoration(labelText: 'City'),
+                      decoration: InputDecoration(labelText: translate.getTranslated('city')),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context)
@@ -179,7 +181,7 @@ class _AddAddressState extends State<AddAddress> {
                       },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return 'Please Enter a City';
+                          return translate.getTranslated('validate_city');
                         } else {
                           return null;
                         }
@@ -202,40 +204,8 @@ class _AddAddressState extends State<AddAddress> {
                       vertical: 10,
                     ),
                     child: TextFormField(
-                      initialValue: _initValues['postal'],
-                      decoration: InputDecoration(labelText: 'Postal Code'),
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context)
-                            .requestFocus(_phoneNumberFocusNode);
-                      },
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return 'Please Enter a Postal Code';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (val) {
-                        _editProduct = Address(
-                          id: _editProduct.id,
-                          name: _editProduct.name,
-                          addressLine: _editProduct.addressLine,
-                          city: _editProduct.city,
-                          postalCode: val,
-                          phoneNumber: _editProduct.phoneNumber,
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 13,
-                      vertical: 10,
-                    ),
-                    child: TextFormField(
                       initialValue: _initValues['phone'],
-                      decoration: InputDecoration(labelText: 'Phone Number'),
+                      decoration: InputDecoration(labelText: translate.getTranslated('phone')),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context)
@@ -243,7 +213,7 @@ class _AddAddressState extends State<AddAddress> {
                       },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return 'Please Enter a Phone Number';
+                          return translate.getTranslated('validate_phone');
                         }
                         if (int.tryParse(val) == null) {
                           return "Please Enter a Valid Number.";
@@ -285,7 +255,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 child: Center(
                   child: Text(
-                    "Add Address",
+                    translate.getTranslated('add_address'),
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/providers/cart.dart';
@@ -19,11 +20,23 @@ import 'package:boltecommerce/screens/payment_screen.dart';
 import 'package:boltecommerce/screens/product_details.dart';
 import 'package:boltecommerce/screens/user_product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(BoltApp());
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('lang', 'ar');
+  Locale locale = Locale(prefs.getString('lang'),'');
+  runApp(BoltApp(locale));
+}
 
 class BoltApp extends StatelessWidget {
+  final Locale locale;
+
+  BoltApp(this.locale);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -54,17 +67,40 @@ class BoltApp extends StatelessWidget {
         ),
       ],
       child: Consumer<Auth>(
-        builder: (context, auth, _) => MaterialApp(
+        builder: (context, auth, _) =>
+            MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Bolt eCommerce",
           theme: ThemeData(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
             primaryIconTheme: IconThemeData(
               color: Colors.black,
             ),
             primaryColor: Colors.grey,
           ),
+            locale: locale,
+          localizationsDelegates: [
+            AppLocale.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('en',''),
+            Locale('ar',''),
+          ],
+          localeResolutionCallback: (currentLocale,supportedLocale){
+            if(currentLocale.languageCode != null){
+              for(Locale locale in supportedLocale){
+                if(currentLocale.languageCode == locale.languageCode){
+                  return currentLocale;
+                }
+              }
+            }
+            return supportedLocale.first;
+          },
           home:  auth.isAuth
-              ? HomePage()
+              ? Loading()
               : FutureBuilder(
             future: auth.tryAutoLogin(),
             builder: (context, snapshot) =>

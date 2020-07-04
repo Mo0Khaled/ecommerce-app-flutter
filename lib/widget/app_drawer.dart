@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
     final authData = Provider.of<Auth>(context,listen: false);
     return Drawer(
       child: Center(
@@ -17,17 +19,17 @@ class AppDrawer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Divider(),
-            buildDrawerScreens(context, HomePage.routeId, 'Home'),
-            buildDrawerScreens(context, HomePage.routeId, 'Profile'),
-            buildDrawerScreens(context, CartScreen.routeId, 'My Cart'),
-            buildDrawerScreens(context, FavoriteScreen.routeId, 'Favorite'),
-            buildDrawerScreens(context, OrdersScreen.routeId, 'My Orders'),
-            buildDrawerScreens(context, HomePage.routeId, 'Language'),
+            buildDrawerScreens(context, HomePage.routeId, translate.getTranslated('home')),
+            buildDrawerScreens(context, HomePage.routeId, translate.getTranslated('profile')),
+            buildDrawerScreens(context, CartScreen.routeId, translate.getTranslated('my_cart')),
+            buildDrawerScreens(context, FavoriteScreen.routeId, translate.getTranslated('Favorites')),
+            buildDrawerScreens(context, OrdersScreen.routeId, translate.getTranslated('my_orders')),
+            buildDrawerScreens(context, HomePage.routeId, translate.getTranslated('language')),
             GestureDetector(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  'Settings',
+                  translate.getTranslated('settings'),
                   style: TextStyle(
                     fontSize: 22,
                   ),
@@ -54,7 +56,7 @@ class AppDrawer extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'LogOut',
+              translate.getTranslated('logout'),
               style: TextStyle(
                 fontSize: 22,
               ),

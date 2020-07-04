@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/model/http_exception.dart';
 import 'package:boltecommerce/providers/auth.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,7 @@ void _showErrorDialog(String message){
 
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
     return Scaffold(
       body: Transform.translate(
         offset: Offset(0, 80),
@@ -93,7 +95,7 @@ void _showErrorDialog(String message){
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  _authMode == AuthMode.signUp ? "SignUp"  : "Login",
+                  _authMode == AuthMode.signUp ? translate.getTranslated('signUp')  : translate.getTranslated('logIn'),
                   style: TextStyle(fontSize: 30),
                 ),
               ),
@@ -106,14 +108,15 @@ void _showErrorDialog(String message){
                       if (_authMode == AuthMode.signUp)
                         TextFormField(
                             enabled: _authMode == AuthMode.signUp,
-                            decoration: InputDecoration(labelText: "Name"),
+                            decoration: InputDecoration(labelText: translate.getTranslated('name')),
                           onSaved: (save){
                               _authData['name'] = save;
                           },
                         ),
                       TextFormField(
-                        decoration: InputDecoration(labelText: "Email Address"),
+                        decoration: InputDecoration(labelText: translate.getTranslated('email')),
                         keyboardType: TextInputType.emailAddress,
+                        // ignore: missing_return
                         validator: (val) {
                           if (val.isEmpty || !val.contains('@')) {
                             return 'Invalid email!';
@@ -124,9 +127,10 @@ void _showErrorDialog(String message){
                         },
                       ),
                       TextFormField(
-                        decoration: InputDecoration(labelText: "Password"),
+                        decoration: InputDecoration(labelText: translate.getTranslated('password')),
                         obscureText: true,
                         controller: _passwordController,
+                        // ignore: missing_return
                         validator: (val) {
                           if (val.isEmpty) {
                             return "Please Enter a Password";
@@ -142,15 +146,16 @@ void _showErrorDialog(String message){
                         TextFormField(
                             enabled: _authMode == AuthMode.signUp,
                             decoration:
-                                InputDecoration(labelText: "Confirm Password"),
+                                InputDecoration(labelText: translate.getTranslated('confirm_password')),
                             obscureText: true,
                             validator: _authMode == AuthMode.signUp
+                                // ignore: missing_return
                                 ? (val) {
                                     if (val != _passwordController.text) {
                                       return "Password don't match";
                                     }
                                   }
-                                  //
+
                                 : null,
                         ),
                       SizedBox(
@@ -175,14 +180,14 @@ void _showErrorDialog(String message){
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              '${_authMode == AuthMode.signUp ? 'SIGN UP' : 'SIGN IN'}',
+                              '${_authMode == AuthMode.signUp ? translate.getTranslated('signUp')  : translate.getTranslated('logIn')}',
                               style: TextStyle(fontSize: 18,color: Colors.white),
                             ),
                           ),
                         ),
                       FlatButton(
                         child: Text(
-                            'Already have an acoount ? ${_authMode == AuthMode.LogIn ? 'SIGN UP' : 'SIGN IN'}'),
+                            '${translate.getTranslated('have_account')} ${_authMode == AuthMode.LogIn ? translate.getTranslated('signUp')  : translate.getTranslated('logIn')}'),
                         onPressed: _switchMode,
                         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

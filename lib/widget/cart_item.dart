@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
     final dismissProd = Provider.of<Cart>(context, listen: false);
     var total = price * quantity;
     return Dismissible(
@@ -48,36 +50,36 @@ class CartItem extends StatelessWidget {
           context: context,
           builder: (context) =>
           Platform.isAndroid ? CupertinoAlertDialog(
-            title: Text("Are You Sure?"),
-            content: Text("Do You Want to remove the Item From The Cart?"),
+            title: Text(translate.getTranslated('title_remove_someThing')),
+            content: Text(translate.getTranslated('remove_from_cart')),
             actions: <Widget>[
               CupertinoDialogAction(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text("No"),
+                child: Text(translate.getTranslated('no')),
               ),
               CupertinoDialogAction(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text("Yes"),
+                child: Text(translate.getTranslated('yes')),
               ),
             ],
           ) :
           AlertDialog(
-            title: Text("Are You Sure?"),
-            content: Text("Do You Want to remove the Item From The Cart?"),
+            title: Text(translate.getTranslated('title_remove_someThing')),
+            content: Text(translate.getTranslated('remove_from_cart')),
             actions: <Widget>[
               FlatButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text("No"),
+                child: Text(translate.getTranslated('no')),
               ),
               FlatButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text("Yes"),
+                child: Text(translate.getTranslated('yes')),
               ),
             ],
           ),
         );
       },
-      child:  Card(
+      child: Card(
         margin: EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
@@ -88,8 +90,18 @@ class CartItem extends StatelessWidget {
             height: 138,
             child: Row(
               children: <Widget>[
+                translate.locale.languageCode == 'en' ?
                 Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                   padding: EdgeInsets.only(right: 15),
+                  child: Container(
+                    width: 120,
+                    child: Image.network(
+                      img,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ) :  Padding(
+                  padding: EdgeInsets.only(left: 15),
                   child: Container(
                     width: 120,
                     child: Image.network(
@@ -98,6 +110,7 @@ class CartItem extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

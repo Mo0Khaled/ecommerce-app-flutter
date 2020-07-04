@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
@@ -29,6 +30,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
 //    final loadedProduct = Provider.of<Product>(context);
     final productId = ModalRoute.of(context).settings.arguments as String;
     final loadedProduct =
@@ -145,7 +147,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     Spacer(),
                     Text(
-                      "49 Reviews",
+                      translate.getTranslated('reviews'),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
@@ -162,7 +164,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Description",
+                  translate.getTranslated('description'),
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -191,14 +193,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Select Size",
+                      translate.getTranslated('select_size'),
                       style: TextStyle(fontSize: 15),
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     Text(
-                      "Select Color",
+                      translate.getTranslated('select_color'),
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -297,10 +299,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                           _scaffoldKey.currentState.hideCurrentSnackBar();
                           _scaffoldKey.currentState.showSnackBar(
                             SnackBar(
-                              content: Text("add one to the Cart!"),
+                              content: Text(translate.getTranslated('snakeBar_add_to_cart')),
                               duration: Duration(seconds: 2),
                               action: SnackBarAction(
-                                label: "UNDO",
+                                label: translate.getTranslated('undo'),
                                 onPressed: () =>
                                     cartPro.removeSingleItem(loadedProduct.id),
                               ),
@@ -308,7 +310,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           );
                         },
                         child: Text(
-                          "ADD TO CART",
+                         translate.getTranslated('add_to_cart'),
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -325,7 +327,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               arguments: loadedProduct.id);
                         },
                         child: Text(
-                          "BUY NOW",
+                         translate.getTranslated('buy_now'),
                           style: TextStyle(fontSize: 18),
                         ),
                       ),

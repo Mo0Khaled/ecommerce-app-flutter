@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/screens/confirmation.dart';
@@ -12,6 +13,7 @@ class CheckOut extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderPro = Provider.of<Orders>(context);
     final cartPro = Provider.of<Cart>(context,listen: false);
+    final translate = AppLocale.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -25,7 +27,7 @@ class CheckOut extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                "Checkout",
+                translate.getTranslated('check_out'),
                 style: TextStyle(fontSize: 30),
               ),
             ),
@@ -54,7 +56,7 @@ class CheckOut extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Subtotal",
+                        translate.getTranslated('subtotal'),
                         style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
                       Text("\$${cartPro.totalAmount.toStringAsFixed(2)}"),
@@ -67,7 +69,7 @@ class CheckOut extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Discount",
+                        translate.getTranslated('discount'),
                         style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
                       Text("0.0"),
@@ -80,7 +82,7 @@ class CheckOut extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Shipping",
+                        translate.getTranslated('shipping'),
                         style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
                       Text("0.0"),
@@ -100,7 +102,7 @@ class CheckOut extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Total",
+                        translate.getTranslated('total'),
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                       Text("\$${cartPro.totalAmount.toStringAsFixed(2)}"),
@@ -142,6 +144,7 @@ class _OrderButtonState extends State<OrderButton> {
   var _isLoading = false;
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
     return GestureDetector(
       onTap: (widget.cartPro.totalAmount <= 0 || _isLoading)  ? null :
           () async {
@@ -171,7 +174,7 @@ class _OrderButtonState extends State<OrderButton> {
         ),
         child: Center(
           child: _isLoading ? CircularProgressIndicator() : Text(
-            "Buy",
+           translate.getTranslated('buy'),
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         ),

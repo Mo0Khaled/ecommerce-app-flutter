@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/screens/add_address.dart';
 import 'package:boltecommerce/screens/payment_screen.dart';
@@ -6,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddressScreen extends StatelessWidget {
+  
   static const routeId = '/address';
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
     final addressData = Provider.of<AddressProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -21,7 +24,7 @@ class AddressScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              "Address",
+              translate.getTranslated('address'),
               style: TextStyle(fontSize: 30),
             ),
           ),
@@ -64,7 +67,7 @@ class AddressScreen extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          "Add Address",
+                          translate.getTranslated('add_address'),
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
@@ -91,7 +94,7 @@ class AddressScreen extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          "Continue To Payment",
+                          translate.getTranslated('continue_to_payment'),
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
