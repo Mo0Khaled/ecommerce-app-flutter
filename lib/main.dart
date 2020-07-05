@@ -55,8 +55,8 @@ class BoltApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => AddressProvider(),
+        ChangeNotifierProxyProvider<Auth,AddressProvider>(
+          update: (ctx,auth,previousAddress) => AddressProvider(auth.token, auth.userId, previousAddress == null ? [] : previousAddress.addresses),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
           update: (ctx, auth, previousOrders) => Orders(
@@ -73,6 +73,8 @@ class BoltApp extends StatelessWidget {
           title: "Bolt eCommerce",
           theme: ThemeData(
             visualDensity: VisualDensity.adaptivePlatformDensity,
+            iconTheme: IconThemeData(),
+            appBarTheme:AppBarTheme(color: Colors.white,elevation: 0),
             primaryIconTheme: IconThemeData(
               color: Colors.black,
             ),

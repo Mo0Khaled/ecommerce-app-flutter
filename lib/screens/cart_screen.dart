@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart' show Cart;
 import 'package:boltecommerce/screens/Address_screen.dart';
+import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/featured.dart';
 import 'package:boltecommerce/widget/cart_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +15,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartPro = Provider.of<Cart>(context);
+    final cartPro = Provider.of<Cart>(context, listen: false);
     final translate = AppLocale.of(context);
 //    final orderPro = Provider.of<Orders>(context, listen: false);
     return Scaffold(
@@ -42,7 +46,8 @@ class CartScreen extends StatelessWidget {
                         InkWell(
                           child: Text(
                             translate.getTranslated('lets_shopping'),
-                            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           onTap: () => Navigator.of(context)
                               .pushNamed(FeaturedPage.routeId),
@@ -50,17 +55,22 @@ class CartScreen extends StatelessWidget {
                       ],
                     ),
                   )
-                : ListView.builder(
-                    itemBuilder: (context, index) => CartItem(
-                      title: cartPro.items.values.toList()[index].title,
-                      id: cartPro.items.values.toList()[index].id,
-                      img: cartPro.items.values.toList()[index].img,
-                      price: cartPro.items.values.toList()[index].price,
-                      quantity: cartPro.items.values.toList()[index].quantity,
-                      productId: cartPro.items.keys.toList()[index],
+                :
+                   Consumer<Cart>(
+                    builder: (context, cartPro, _) => ListView.builder(
+                      itemBuilder: (context, index) => CartItem(
+                        title: cartPro.items.values.toList()[index].title,
+                        id: cartPro.items.values.toList()[index].id,
+                        img: cartPro.items.values.toList()[index].img,
+                        price: cartPro.items.values.toList()[index].price,
+                        quantity:
+                            cartPro.items.values.toList()[index].quantity,
+                        productId: cartPro.items.keys.toList()[index],
+                      ),
+                      itemCount: cartPro.items.length,
                     ),
-                    itemCount: cartPro.items.length,
                   ),
+
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -68,10 +78,57 @@ class CartScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () {
-//                  orderPro.addOrderToCheckOut(
-//                      cartPro.items.values.toList(), cartPro.totalAmount);
-//                  cartPro.clear();
-                  Navigator.of(context).pushNamed(AddressScreen.routeId);
+                  cartPro.itemCount <= 0
+                      ? showDialog(
+                          context: context,
+                          builder: (context) => Platform.isIOS
+                              ? CupertinoAlertDialog(
+                                  title:
+                                      Text(translate.getTranslated('warning')),
+                                  content: Text(translate
+                                      .getTranslated('warning_content')),
+                                  actions: <Widget>[
+                                    CupertinoDialogAction(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: Text(translate
+                                          .getTranslated('warning_content')),
+                                    ),
+                                    CupertinoDialogAction(
+                                      onPressed: () => Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              HomePage.routeId),
+                                      child: Text(
+                                          translate.getTranslated('go_home')),
+                                    ),
+                                  ],
+                                )
+                              : AlertDialog(
+                                  title:
+                                      Text(translate.getTranslated('warning')),
+                                  content: Text(translate
+                                      .getTranslated('warning_content')),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: Text(
+                                        translate
+                                            .getTranslated('warning_button'),
+                                      ),
+                                    ),
+                                    FlatButton(
+                                      onPressed: () => Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              HomePage.routeId),
+                                      child: Text(
+                                        translate.getTranslated('go_home'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        )
+                      : Navigator.of(context).pushNamed(AddressScreen.routeId);
                 },
                 child: Container(
                   width: double.infinity,

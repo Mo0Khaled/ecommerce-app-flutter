@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/widget/orderItem.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -34,7 +37,7 @@ class OrdersScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
-                        "My Orders",
+                        translate.getTranslated('my_orders'),
                         style: TextStyle(fontSize: 30),
                       ),
                     ),

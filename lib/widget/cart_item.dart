@@ -49,7 +49,7 @@ class CartItem extends StatelessWidget {
         return showDialog(
           context: context,
           builder: (context) =>
-          Platform.isAndroid ? CupertinoAlertDialog(
+          Platform.isIOS ? CupertinoAlertDialog(
             title: Text(translate.getTranslated('title_remove_someThing')),
             content: Text(translate.getTranslated('remove_from_cart')),
             actions: <Widget>[

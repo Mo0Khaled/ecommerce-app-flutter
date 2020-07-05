@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:flutter/material.dart';
 class CheckOutItem extends StatelessWidget {
   final String id;
@@ -14,6 +15,7 @@ class CheckOutItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var total = price * quantity;
+    final translate = AppLocale.of(context);
     return Card(
       margin: EdgeInsets.symmetric(
         horizontal: 15,
@@ -25,8 +27,16 @@ class CheckOutItem extends StatelessWidget {
           height: 138,
           child: Row(
             children: <Widget>[
+              translate.locale.languageCode == 'en' ?
               Padding(
                 padding: const EdgeInsets.only(right: 15),
+                child: Image.network(
+                  img,
+                  fit: BoxFit.cover,
+                ),
+              ) :
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
                 child: Image.network(
                   img,
                   fit: BoxFit.cover,

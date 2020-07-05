@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/screens/add_address.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +43,20 @@ class AddressItem extends StatelessWidget {
         confirmDismiss: (direction) {
           return showDialog(
             context: context,
-            builder: (context) => AlertDialog(
+            builder: (context) =>   Platform.isIOS ? CupertinoAlertDialog(
+              title: Text(translate.getTranslated('title_remove_someThing')),
+              content: Text(translate.getTranslated('remove_address_alert')),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text(translate.getTranslated('no')),
+                ),
+                CupertinoDialogAction(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text(translate.getTranslated('yes')),
+                ),
+              ],
+            ):AlertDialog(
               title: Text(translate.getTranslated('title_remove_someThing')),
               content: Text(translate.getTranslated('remove_address_alert')),
               actions: <Widget>[

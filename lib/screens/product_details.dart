@@ -1,7 +1,6 @@
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/providers/cart.dart';
-import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
@@ -36,7 +35,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     final loadedProduct =
         Provider.of<ProductProviders>(context,listen: false).findById(productId);
     final cartPro = Provider.of<Cart>(context, listen: false);
-    final orderPro = Provider.of<Orders>(context, listen: false);
     const activeCardColor = Color(0xff667EEA);
     const inActiveColor = Color(0xffE1E1E1);
     final authData = Provider.of<Auth>(context,listen: false);
@@ -139,7 +137,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       width: 20,
                     ),
                     Text(
-                      "Very Good",
+                      translate.getTranslated('VeryGood'),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
@@ -289,11 +287,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                         padding: EdgeInsets.symmetric(vertical: 20),
                         color: Color(0xffD8D6D6),
                         textColor: Colors.white,
-                        onPressed: () {
-                          cartPro.addItem(
+                        onPressed: () async {
+                         await cartPro.addItem(
                             loadedProduct.id,
                             loadedProduct.price,
                             loadedProduct.title,
+                            loadedProduct.discount,
+                            loadedProduct.shipping,
                             loadedProduct.img,
                           );
                           _scaffoldKey.currentState.hideCurrentSnackBar();
@@ -321,8 +321,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         textColor: Colors.white,
                         color: Color(0XFF667EEA),
                         onPressed: () {
-                          orderPro.addOrder(cartPro.items.values.toList(),
-                              cartPro.totalAmount);
+//                         cartPro.addItem(productId, loadedProduct.price, loadedProduct.title, loadedProduct.img);
                           Navigator.of(context).pushNamed(AddressScreen.routeId,
                               arguments: loadedProduct.id);
                         },

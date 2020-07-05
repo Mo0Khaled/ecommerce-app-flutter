@@ -5,7 +5,6 @@ class Address with ChangeNotifier {
   final String name;
   final String addressLine;
   final String city;
-  final String postalCode;
   final int phoneNumber;
 
   Address({
@@ -13,7 +12,6 @@ class Address with ChangeNotifier {
     this.name,
     this.addressLine,
     this.city,
-    this.postalCode,
     this.phoneNumber,
   });
 }

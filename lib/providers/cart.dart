@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class CartItem with ChangeNotifier {
   final String id;
   final String title;
   final int quantity;
   final double price;
+  final double discount;
+  final double shipping;
   final String img;
 
   CartItem({
@@ -12,6 +15,8 @@ class CartItem with ChangeNotifier {
     @required this.title,
     @required this.quantity,
     @required this.price,
+    @required this.discount,
+    @required this.shipping,
     @required this.img,
   });
 }
@@ -29,32 +34,54 @@ class Cart with ChangeNotifier {
     );
     return total;
   }
+  double get totalAfterDiscount {
+    var totalDiscount = 0.0;
+    _items.forEach((key, cartItem) {
+      totalDiscount += cartItem.price * cartItem.quantity - allDiscount;
+    });
+    return totalDiscount;
+  }
+  double get allDiscount {
+    var allDiscount = 0.0;
+    _items.forEach((key, cartItem) {
+      allDiscount +=  cartItem.discount * cartItem.quantity;
+    });
+    return allDiscount;
+  }
 
-  void addItem(String productId, double price, String title, String img) {
-    if (_items.containsKey(productId)) {
-      _items.update(
-        productId,
-        (exCartItem) => CartItem(
-          id: exCartItem.id,
-          title: exCartItem.title,
-          quantity: exCartItem.quantity + 1,
-          price: exCartItem.price,
-          img: exCartItem.img,
-        ),
-      );
-    } else {
-      _items.putIfAbsent(
-        productId,
-        () => CartItem(
-          id: DateTime.now().toString(),
-          title: title,
-          price: price,
-          img: img,
-          quantity: 1,
-        ),
-      );
-    }
-    notifyListeners();
+
+  Future<void> addItem(String productId, double price, String title,double discount,double shipping, String img) async{
+
+
+     if (_items.containsKey(productId)) {
+       _items.update(
+         productId,
+             (exCartItem) => CartItem(
+           id: DateTime.now().toString(),
+           title: exCartItem.title,
+           quantity: exCartItem.quantity + 1,
+           price: exCartItem.price,
+           discount: exCartItem.discount,
+           shipping: exCartItem.shipping,
+           img: exCartItem.img,
+         ),
+       );
+     } else {
+       _items.putIfAbsent(
+         productId,
+             () => CartItem(
+           id:  DateTime.now().toString(),
+           title: title,
+           price: price,
+           discount: discount,
+           shipping: shipping,
+           img: img,
+           quantity: 1,
+         ),
+       );
+     }
+     notifyListeners();
+
   }
 
   void removeSingleItem(String productId) {
@@ -69,6 +96,8 @@ class Cart with ChangeNotifier {
           title: exCartItem.title,
           quantity: exCartItem.quantity - 1,
           price: exCartItem.price,
+          discount: exCartItem.discount,
+          shipping: exCartItem.shipping,
           img: exCartItem.img,
         ),
       );
@@ -87,6 +116,8 @@ class Cart with ChangeNotifier {
           title: value.title,
           quantity: value.quantity + 1,
           price: value.price,
+          discount: value.discount,
+          shipping: value.shipping,
           img: value.img,
         ),
       );
@@ -103,6 +134,8 @@ class Cart with ChangeNotifier {
           title: value.title,
           quantity: value.quantity <= 0 ? value.quantity : value.quantity - 1,
           price: value.price,
+          discount: value.discount,
+          shipping: value.shipping,
           img: value.img,
         ),
       );

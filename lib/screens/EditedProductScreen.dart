@@ -13,6 +13,7 @@ class EditedProductScreen extends StatefulWidget {
 class _EditedProductScreenState extends State<EditedProductScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
+  final _discountFocusNode = FocusNode();
   final _imgFocusNode = FocusNode();
   final _imgController = TextEditingController();
   final _imgUrlFocusNode = FocusNode();
@@ -21,6 +22,8 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
     id: null,
     title: "",
     review: null,
+    discount: 0,
+    shipping: 0,
     description: "",
     img: "",
     price: 0,
@@ -29,6 +32,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
     'title': '',
     'description': '',
     'price': '',
+    'discount': '',
     'img': '',
   };
   var _isInit =true;
@@ -47,6 +51,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
           'title': _editedProduct.title,
           'description':_editedProduct.description,
           'price':_editedProduct.price.toString(),
+          'discount': _editedProduct.discount.toString(),
           'img': '',
         };
         _imgController.text = _editedProduct.img;
@@ -126,6 +131,8 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                     id: _editedProduct.id,
                     title: val,
                     review: _editedProduct.review,
+                    discount: _editedProduct.discount,
+                    shipping: _editedProduct.shipping,
                     description: _editedProduct.description,
                     img: _editedProduct.img,
                     price: _editedProduct.price,
@@ -157,6 +164,8 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                     id: _editedProduct.id,
                     title: _editedProduct.title,
                     review: _editedProduct.review,
+                    discount: _editedProduct.discount,
+                    shipping: _editedProduct.shipping,
                     description: _editedProduct.description,
                     img: _editedProduct.img,
                     price: double.parse(val),
@@ -182,7 +191,33 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                     id: _editedProduct.id,
                     title: _editedProduct.title,
                     review: _editedProduct.review,
+                    discount: _editedProduct.discount,
+                    shipping: _editedProduct.shipping,
                     description: val,
+                    img: _editedProduct.img,
+                    price: _editedProduct.price,
+                  );
+                },
+              ),
+              TextFormField(
+                initialValue: _initValue['discount'],
+                decoration: InputDecoration(labelText: "Discount"),
+                keyboardType: TextInputType.number,
+                focusNode: _discountFocusNode,
+                validator: (val) {
+                  if (val.isEmpty) {
+                    return "Please Enter a Discount";
+                  }
+                  return null;
+                },
+                onSaved: (val) {
+                  _editedProduct = Product(
+                    id: _editedProduct.id,
+                    title: _editedProduct.title,
+                    review: _editedProduct.review,
+                    discount: double.parse(val),
+                    shipping: _editedProduct.shipping,
+                    description: _editedProduct.description,
                     img: _editedProduct.img,
                     price: _editedProduct.price,
                   );
@@ -216,6 +251,8 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                     id: _editedProduct.id,
                     title: _editedProduct.title,
                     review: _editedProduct.review,
+                    discount: _editedProduct.discount,
+                    shipping: _editedProduct.shipping,
                     description: _editedProduct.description,
                     img: val,
                     price: _editedProduct.price,

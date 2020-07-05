@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
@@ -5,6 +7,7 @@ import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/orders_screen.dart';
 import 'package:boltecommerce/screens/user_product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,15 +40,23 @@ class AppDrawer extends StatelessWidget {
               ),
               onTap: () {
                 authData.userId == 'TAkaObz0d8NEfPCSkCovdoWri203' ||authData.userId == 'KPk06mKhdvWts0w6sm4Y4MFxrM22' ? Navigator.of(context).pushNamed(UserProduct.routeId) :
-                    showDialog(context: context,builder: (context)=> AlertDialog(
-                      title: Text('Hello!'),
-                      content: Text(
-                          "Please This is Page For The Owner Only , Thanks for Understanding"),
+                    showDialog(context: context,builder: (context)=>   Platform.isAndroid ? CupertinoAlertDialog(
+                      title: Text(translate.getTranslated('hello')),
+                      content: Text(translate.getTranslated('settings_warning')),
+                      actions: <Widget>[
+                        CupertinoDialogAction(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          child: Text('Okay'),
+                        ),
+                      ],
+                    ): AlertDialog(
+                      title: Text(translate.getTranslated('hello')),
+                      content: Text(translate.getTranslated('settings_warning')),
                       actions: <Widget>[
                         FlatButton(
                           onPressed: () =>
                               Navigator.of(context).pop(true),
-                          child: Text("Okay"),
+                          child: Text(translate.getTranslated('warning_button')),
                         ),
                       ],
                     ),

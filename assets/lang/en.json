@@ -63,5 +63,11 @@
   "home": "Home",
   "profile": "Profile",
   "my_cart": "My Cart",
-  "language": "Language"
+  "language": "Language",
+  "warning": "Warning!",
+  "warning_content": "You Don't have any product , You can't go there",
+  "warning_button": "Okay",
+  "go_home": "Go Home ?",
+  "hello": "Hello!",
+  "settings_warning": "Please This is Page For The Owner Only , Thanks for Understanding"
 }

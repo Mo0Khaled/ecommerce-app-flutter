@@ -21,7 +21,6 @@ class _AddAddressState extends State<AddAddress> {
     name: '',
     addressLine: '',
     city: '',
-    postalCode: '',
     phoneNumber: 0,
   );
   @override
@@ -52,7 +51,6 @@ class _AddAddressState extends State<AddAddress> {
           'name': _editProduct.name,
           'address': _editProduct.addressLine,
           'city': _editProduct.city,
-          'postal': _editProduct.postalCode,
           'phone': _editProduct.phoneNumber.toString(),
         };
       }
@@ -129,7 +127,6 @@ class _AddAddressState extends State<AddAddress> {
                           name: val,
                           addressLine: _editProduct.addressLine,
                           city: _editProduct.city,
-                          postalCode: _editProduct.postalCode,
                           phoneNumber: _editProduct.phoneNumber,
                         );
                       },
@@ -160,7 +157,6 @@ class _AddAddressState extends State<AddAddress> {
                           name: _editProduct.name,
                           addressLine: val,
                           city: _editProduct.city,
-                          postalCode: _editProduct.postalCode,
                           phoneNumber: _editProduct.phoneNumber,
                         );
                       },
@@ -192,7 +188,6 @@ class _AddAddressState extends State<AddAddress> {
                           name: _editProduct.name,
                           addressLine: _editProduct.addressLine,
                           city: val,
-                          postalCode: _editProduct.postalCode,
                           phoneNumber: _editProduct.phoneNumber,
                         );
                       },
@@ -227,7 +222,6 @@ class _AddAddressState extends State<AddAddress> {
                           name: _editProduct.name,
                           addressLine: _editProduct.addressLine,
                           city: _editProduct.city,
-                          postalCode: _editProduct.postalCode,
                           phoneNumber: int.parse(val),
                         );
                       },

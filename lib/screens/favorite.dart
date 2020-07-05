@@ -1,3 +1,4 @@
+import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/widget/featuredList.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,8 @@ class FavoriteScreen extends StatelessWidget {
   static const routeId = '/Fav';
   @override
   Widget build(BuildContext context) {
+    final translate = AppLocale.of(context);
+
     var _showFavOnly = true;
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +29,7 @@ class FavoriteScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              "Favorites",
+              translate.getTranslated('Favorites'),
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),

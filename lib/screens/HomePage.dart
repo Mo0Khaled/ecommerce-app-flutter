@@ -106,7 +106,7 @@ class HomePage extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
-                height: 270,
+                height: 275,
                 child: ProductList(
                   scrollDirection: Axis.horizontal,
                 ),
@@ -118,7 +118,7 @@ class HomePage extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
-                height: 270,
+                height: 275,
                 child: ProductList(
                   scrollDirection: Axis.horizontal,
                 ),

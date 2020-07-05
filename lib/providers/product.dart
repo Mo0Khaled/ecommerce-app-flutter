@@ -5,6 +5,8 @@ class Product with ChangeNotifier {
   final String id;
   final String title;
   final double review;
+  final double discount;
+  final double shipping;
   final String description;
   final String img;
   final double price;
@@ -14,6 +16,8 @@ class Product with ChangeNotifier {
     @required this.id,
     @required this.title,
     @required this.review,
+    @required this.discount,
+    @required this.shipping,
     @required this.description,
     @required this.img,
     @required this.price,

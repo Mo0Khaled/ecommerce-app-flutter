@@ -13,7 +13,8 @@ class PaymentScreen extends StatelessWidget {
     final translate = AppLocale.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+//        leading: IconButton(icon: Icon(Icons.keyboard_backspace), onPressed: ()=>cartPro.removeSingleItem()),
+//        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Column(
@@ -91,7 +92,7 @@ class PaymentScreen extends StatelessWidget {
                       translate.getTranslated('discount'),
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    Text("0.0"),
+                    Text('\$${cartPro.allDiscount.toString()}'),
                   ],
                 ),
                 SizedBox(
@@ -124,7 +125,7 @@ class PaymentScreen extends StatelessWidget {
                       translate.getTranslated('total'),
                       style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
-                    Text("\$${cartPro.totalAmount}"),
+                    Text("\$${cartPro.totalAfterDiscount}"),
                   ],
                 ),
               ],

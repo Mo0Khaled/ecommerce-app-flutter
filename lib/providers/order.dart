@@ -53,6 +53,8 @@ class Orders with ChangeNotifier {
                   title: item['title'],
                   quantity: item['quantity'],
                   price: item['price'],
+                  discount: item['discount'],
+                  shipping: item['shipping'],
                   img: item['img'],
                 ),
               )
