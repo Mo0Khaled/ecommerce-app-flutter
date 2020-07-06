@@ -5,6 +5,7 @@ import 'package:boltecommerce/providers/auth.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
 import 'package:boltecommerce/screens/favorite.dart';
+import 'package:boltecommerce/screens/language_screen.dart';
 import 'package:boltecommerce/screens/orders_screen.dart';
 import 'package:boltecommerce/screens/user_product.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +28,7 @@ class AppDrawer extends StatelessWidget {
             buildDrawerScreens(context, CartScreen.routeId, translate.getTranslated('my_cart')),
             buildDrawerScreens(context, FavoriteScreen.routeId, translate.getTranslated('Favorites')),
             buildDrawerScreens(context, OrdersScreen.routeId, translate.getTranslated('my_orders')),
-            buildDrawerScreens(context, HomePage.routeId, translate.getTranslated('language')),
+            buildDrawerScreens(context, LanguageScreen.routeId, translate.getTranslated('language')),
             GestureDetector(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),

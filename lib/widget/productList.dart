@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/widget/product_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +27,7 @@ class _ProductListState extends State<ProductList> {
           builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: Platform.isIOS ? CupertinoActivityIndicator() :CircularProgressIndicator(),
           );
         } else {
           if (snapshot.error != null) {

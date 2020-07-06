@@ -1,12 +1,15 @@
-
 import 'dart:async';
 
+import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
 import 'HomePage.dart';
+
 class Loading extends StatefulWidget {
   static const routeId = '/loading';
+
   @override
   _LoadingState createState() => _LoadingState();
 }
@@ -15,8 +18,11 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     Timer(
-      Duration(seconds: 2),
-      ()async => await Navigator.of(context).pushReplacementNamed(HomePage.routeId),
+      Duration(seconds:1),
+      () async {
+        await Provider.of<ProductProviders>(context,listen: false).fetchAndSetProduct();
+        Navigator.of(context).pushReplacementNamed(HomePage.routeId);
+      },
     );
     super.initState();
   }

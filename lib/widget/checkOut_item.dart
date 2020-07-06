@@ -56,6 +56,13 @@ class CheckOutItem extends StatelessWidget {
                     '\$${total.toStringAsFixed(2)}',
                     style: TextStyle(fontSize: 18, color: Color(0xff374ABE)),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Quantity: $quantity',
+                    style: TextStyle(fontSize: 15, color: Color(0xff374ABE)),
+                  ),
                 ],
               ),
             ],

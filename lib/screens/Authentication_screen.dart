@@ -11,42 +11,83 @@ class AuthenticationScreen extends StatefulWidget {
 
 enum AuthMode { signUp, LogIn }
 
-class _AuthenticationScreenState extends State<AuthenticationScreen> {
+class _AuthenticationScreenState extends State<AuthenticationScreen>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.LogIn;
   Map<String, String> _authData = {
-    'name':'',
+    'name': '',
     'email': '',
     'password': '',
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
-void _showErrorDialog(String message){
-  showDialog(context: context,builder: (context) => AlertDialog(
-    title: Text("An Error Occurred!"),
-    content: Text(message),
-    actions: <Widget>[
-      FlatButton(onPressed: ()=> Navigator.of(context).pop(), child: Text("Okay!"),),
-    ],
-  ),);
-}
+  AnimationController _controller;
+  Animation<Offset> _slideAnimation;
+  Animation<double> _opacityAnimation;
+  @override
+  void initState() {
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _slideAnimation = Tween<Offset>(
+            begin: Offset(0, -1), end: Offset(0,0))
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
+//    _heightAnimation.addListener(() {
+//      setState(() {});
+//    });
 
-  Future<void> _submit()async{
-    if(!_formKey.currentState.validate()){
+    _opacityAnimation = Tween<double>(
+        begin: 0.0, end:1.0)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("An Error Occurred!"),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text("Okay!"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
     setState(() {
       _isLoading = true;
     });
-    try{
-      if(_authMode == AuthMode.LogIn){
-       await Provider.of<Auth>(context,listen: false).login(_authData['name'], _authData['email'], _authData['password'],);
-
-  }else{
-       await Provider.of<Auth>(context,listen: false).signUp(_authData['name'], _authData['email'], _authData['password'],);
+    try {
+      if (_authMode == AuthMode.LogIn) {
+        await Provider.of<Auth>(context, listen: false).login(
+          _authData['name'],
+          _authData['email'],
+          _authData['password'],
+        );
+      } else {
+        await Provider.of<Auth>(context, listen: false).signUp(
+          _authData['name'],
+          _authData['email'],
+          _authData['password'],
+        );
       }
-    } on HttpException catch(error){
+    } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email address is already in use.';
@@ -60,8 +101,7 @@ void _showErrorDialog(String message){
         errorMessage = 'Invalid password.';
       }
       _showErrorDialog(errorMessage);
-    }
-    catch(error){
+    } catch (error) {
       const errorMessage =
           'Could not authenticate you. Please try again later.';
       _showErrorDialog(errorMessage);
@@ -70,15 +110,18 @@ void _showErrorDialog(String message){
       _isLoading = false;
     });
   }
+
   void _switchMode() {
     if (_authMode == AuthMode.LogIn) {
       setState(() {
         _authMode = AuthMode.signUp;
       });
+      _controller.forward();
     } else {
       setState(() {
         _authMode = AuthMode.LogIn;
       });
+      _controller.reverse();
     }
   }
 
@@ -95,7 +138,9 @@ void _showErrorDialog(String message){
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  _authMode == AuthMode.signUp ? translate.getTranslated('signUp')  : translate.getTranslated('logIn'),
+                  _authMode == AuthMode.signUp
+                      ? translate.getTranslated('signUp')
+                      : translate.getTranslated('logIn'),
                   style: TextStyle(fontSize: 30),
                 ),
               ),
@@ -105,16 +150,28 @@ void _showErrorDialog(String message){
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      if (_authMode == AuthMode.signUp)
-                        TextFormField(
-                            enabled: _authMode == AuthMode.signUp,
-                            decoration: InputDecoration(labelText: translate.getTranslated('name')),
-                          onSaved: (save){
-                              _authData['name'] = save;
-                          },
+                      AnimatedContainer(
+                        constraints: BoxConstraints(minHeight:_authMode == AuthMode.signUp ?6.0:0 ,maxHeight:_authMode == AuthMode.signUp ? 120 :0 ),
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInSine,
+                        child: FadeTransition(
+                          opacity: _opacityAnimation,
+                          child: SlideTransition(
+                            position: _slideAnimation,
+                            child: TextFormField(
+                              enabled: _authMode == AuthMode.signUp,
+                              decoration: InputDecoration(
+                                  labelText: translate.getTranslated('name')),
+                              onSaved: (save) {
+                                _authData['name'] = save;
+                              },
+                            ),
+                          ),
                         ),
+                      ),
                       TextFormField(
-                        decoration: InputDecoration(labelText: translate.getTranslated('email')),
+                        decoration: InputDecoration(
+                            labelText: translate.getTranslated('email')),
                         keyboardType: TextInputType.emailAddress,
                         // ignore: missing_return
                         validator: (val) {
@@ -127,7 +184,8 @@ void _showErrorDialog(String message){
                         },
                       ),
                       TextFormField(
-                        decoration: InputDecoration(labelText: translate.getTranslated('password')),
+                        decoration: InputDecoration(
+                            labelText: translate.getTranslated('password')),
                         obscureText: true,
                         controller: _passwordController,
                         // ignore: missing_return
@@ -142,28 +200,40 @@ void _showErrorDialog(String message){
                           _authData['password'] = save;
                         },
                       ),
-                      if (_authMode == AuthMode.signUp)
-                        TextFormField(
-                            enabled: _authMode == AuthMode.signUp,
-                            decoration:
-                                InputDecoration(labelText: translate.getTranslated('confirm_password')),
-                            obscureText: true,
-                            validator: _authMode == AuthMode.signUp
-                                // ignore: missing_return
-                                ? (val) {
-                                    if (val != _passwordController.text) {
-                                      return "Password don't match";
-                                    }
-                                  }
-
-                                : null,
+//                        if (_authMode == AuthMode.signUp)
+                      AnimatedContainer(
+                        constraints: BoxConstraints(minHeight: _authMode == AuthMode.signUp ? 60:0, maxHeight:
+                        _authMode == AuthMode.signUp ? 120 : 0),
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInSine,
+                        child: FadeTransition(
+                          opacity: _opacityAnimation,
+                          child: SlideTransition(
+                            position: _slideAnimation,
+                            child: TextFormField(
+                              enabled: _authMode == AuthMode.signUp,
+                              decoration: InputDecoration(
+                                  labelText:
+                                  translate.getTranslated('confirm_password')),
+                              obscureText: true,
+                              validator: _authMode == AuthMode.signUp
+                              // ignore: missing_return
+                                  ? (val) {
+                                if (val != _passwordController.text) {
+                                  return "Password don't match";
+                                }
+                              }
+                                  : null,
+                            ),
+                          ),
                         ),
+                      ),
                       SizedBox(
                         height: 20,
                       ),
                       if (_isLoading)
                         CircularProgressIndicator()
-                    else
+                      else
                         GestureDetector(
                           onTap: _submit,
                           child: Container(
@@ -180,16 +250,18 @@ void _showErrorDialog(String message){
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              '${_authMode == AuthMode.signUp ? translate.getTranslated('signUp')  : translate.getTranslated('logIn')}',
-                              style: TextStyle(fontSize: 18,color: Colors.white),
+                              '${_authMode == AuthMode.signUp ? translate.getTranslated('signUp') : translate.getTranslated('logIn')}',
+                              style:
+                              TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ),
                         ),
                       FlatButton(
                         child: Text(
-                            '${translate.getTranslated('have_account')} ${_authMode == AuthMode.LogIn ? translate.getTranslated('signUp')  : translate.getTranslated('logIn')}'),
+                            '${translate.getTranslated('have_account')} ${_authMode == AuthMode.LogIn ? translate.getTranslated('signUp') : translate.getTranslated('logIn')}'),
                         onPressed: _switchMode,
-                        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         textColor: Theme.of(context).primaryColor,
                       ),

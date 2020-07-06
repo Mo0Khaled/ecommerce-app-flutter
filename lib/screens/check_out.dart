@@ -2,6 +2,7 @@ import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/screens/confirmation.dart';
+import 'package:boltecommerce/widget/app_drawer.dart';
 import 'package:boltecommerce/widget/checkOut_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class CheckOut extends StatelessWidget {
     final translate = AppLocale.of(context);
 
     return Scaffold(
+      drawer: AppDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -72,7 +74,7 @@ class CheckOut extends StatelessWidget {
                         translate.getTranslated('discount'),
                         style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
-                      Text("0.0"),
+                      Text('\$${cartPro.allDiscount}'),
                     ],
                   ),
                   SizedBox(
@@ -105,7 +107,7 @@ class CheckOut extends StatelessWidget {
                         translate.getTranslated('total'),
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
-                      Text("\$${cartPro.totalAmount.toStringAsFixed(2)}"),
+                      Text("\$${cartPro.totalAfterDiscount.toStringAsFixed(2)}"),
                     ],
                   ),
                 ],

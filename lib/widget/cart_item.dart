@@ -126,7 +126,7 @@ class CartItem extends StatelessWidget {
                       style: TextStyle(fontSize: 18, color: Color(0xff374ABE)),
                     ),
                     Transform.translate(
-                      offset: Offset(0, 40),
+                      offset: Offset(0, 20),
                       child: Container(
                         width: 114,
                         height: 42,

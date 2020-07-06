@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 class CartItem with ChangeNotifier {
   final String id;
   final String title;
@@ -34,6 +33,7 @@ class Cart with ChangeNotifier {
     );
     return total;
   }
+
   double get totalAfterDiscount {
     var totalDiscount = 0.0;
     _items.forEach((key, cartItem) {
@@ -50,7 +50,7 @@ class Cart with ChangeNotifier {
   }
 
 
-  Future<void> addItem(String productId, double price, String title,double discount,double shipping, String img) async{
+  void addItem(String productId, double price, String title,double discount,double shipping, String img) {
 
 
      if (_items.containsKey(productId)) {

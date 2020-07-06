@@ -52,10 +52,8 @@ class AddressProvider with ChangeNotifier {
     }catch(error){
       throw error;
     }
-
-
-
   }
+
   Future<void> addAddress(Address address)async {
     final url =
         "https://boltecommerce-11687.firebaseio.com/address/$userId.json?auth=$authToken";

@@ -1,6 +1,7 @@
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/screens/check_out.dart';
+import 'package:boltecommerce/widget/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class PaymentScreen extends StatelessWidget {
     final cartPro = Provider.of<Cart>(context,listen: false);
     final translate = AppLocale.of(context);
     return Scaffold(
+      drawer: AppDrawer(),
       appBar: AppBar(
 //        leading: IconButton(icon: Icon(Icons.keyboard_backspace), onPressed: ()=>cartPro.removeSingleItem()),
 //        backgroundColor: Colors.white,
@@ -125,7 +127,7 @@ class PaymentScreen extends StatelessWidget {
                       translate.getTranslated('total'),
                       style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
-                    Text("\$${cartPro.totalAfterDiscount}"),
+                    Text("\$${cartPro.totalAfterDiscount.toStringAsFixed(2)}"),
                   ],
                 ),
               ],

@@ -24,6 +24,8 @@ class Orders with ChangeNotifier {
   Orders(this.authToken,this.userId, this._orders);
 
   List<OrderItemPro> get orders => _orders;
+  OrderItemPro findById(String id) => _orders.firstWhere((order) => order.id == id);
+
 
   double get totalAmount {
     var total = 0.0;

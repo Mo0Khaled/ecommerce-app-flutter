@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/order.dart';
 import 'package:boltecommerce/widget/orderItem.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +24,7 @@ class OrdersScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator(),
+              child:Platform.isIOS ? CupertinoActivityIndicator() : CircularProgressIndicator(),
             );
           } else {
             if (snapshot.error != null) {

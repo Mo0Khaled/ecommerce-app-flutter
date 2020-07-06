@@ -1,6 +1,5 @@
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/order.dart';
-import 'package:boltecommerce/screens/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +11,6 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final translate = AppLocale.of(context);
-
     return Column(
       children: order.products
           .map(
@@ -24,7 +22,7 @@ class OrderItem extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: 115,
+                  height: 125,
                   child: Row(
                     children: <Widget>[
                       translate.locale.languageCode == 'en'
@@ -32,9 +30,10 @@ class OrderItem extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 15),
                               child: Container(
                                 width: 120,
+//                                height: 120,
                                 child: Image.network(
                                   prod.img,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                 ),
                               ),
                             )
@@ -72,9 +71,9 @@ class OrderItem extends StatelessWidget {
                           Transform.translate(
                             offset: Offset(0, 8),
                             child: InkWell(
-                              onTap: () => Navigator.of(context).pushNamed(
-                                ProductDetails.routeId,
-                              ),
+                              onTap: () {
+//                                Navigator.of(context).pushNamed(ProductDetails.routeId,arguments: order.products[0].);
+                              },
                               child: Container(
                                 width: 114,
                                 height: 39,

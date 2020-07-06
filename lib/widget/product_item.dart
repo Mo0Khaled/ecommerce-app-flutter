@@ -22,10 +22,12 @@ class ProductItem extends StatelessWidget {
                       arguments: productPro.id),
                   child: Container(
                     height: 185,
-                    child: Image.network(
-                      productPro.img,
+                    child: FadeInImage(
+                      placeholder: AssetImage('assets/images/product-placeholder.png'),
+                      image: NetworkImage(
+                        productPro.img,
+                      ),
                       fit: BoxFit.cover,
-                      width: double.infinity,
                     ),
                   ),
                 ),

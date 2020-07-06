@@ -1,3 +1,4 @@
+import 'package:boltecommerce/helpers/customPage.dart';
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/addressProvider.dart';
 import 'package:boltecommerce/providers/auth.dart';
@@ -14,6 +15,7 @@ import 'package:boltecommerce/screens/check_out.dart';
 import 'package:boltecommerce/screens/confirmation.dart';
 import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/featured.dart';
+import 'package:boltecommerce/screens/language_screen.dart';
 import 'package:boltecommerce/screens/loading_screen.dart';
 import 'package:boltecommerce/screens/orders_screen.dart';
 import 'package:boltecommerce/screens/payment_screen.dart';
@@ -27,15 +29,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString('lang', 'ar');
-  Locale locale = Locale(prefs.getString('lang'),'');
-  runApp(BoltApp(locale));
+  prefs.getString('lang');
+//  prefs.setString('lang', 'en');
+//  Locale locale = Locale(prefs.getString('lang'),'');
+  runApp(BoltApp());
 }
 
 class BoltApp extends StatelessWidget {
-  final Locale locale;
-
-  BoltApp(this.locale);
+//  final Locale locale;
+//
+//  BoltApp(this.locale);
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +75,12 @@ class BoltApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: "Bolt eCommerce",
           theme: ThemeData(
+            fontFamily: 'SourceSansPro',
+            pageTransitionsTheme: PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: CustomPageTransitionRoute(),
+              }
+            ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
             iconTheme: IconThemeData(),
             appBarTheme:AppBarTheme(color: Colors.white,elevation: 0),
@@ -80,7 +89,7 @@ class BoltApp extends StatelessWidget {
             ),
             primaryColor: Colors.grey,
           ),
-            locale: locale,
+//            locale:locale,
           localizationsDelegates: [
             AppLocale.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -126,6 +135,7 @@ class BoltApp extends StatelessWidget {
             Loading.routeId: (context) => Loading(),
             UserProduct.routeId: (context) => UserProduct(),
             EditedProductScreen.routeId: (context) => EditedProductScreen(),
+            LanguageScreen.routeId:(context) => LanguageScreen(),
           },
         ),
       ),
