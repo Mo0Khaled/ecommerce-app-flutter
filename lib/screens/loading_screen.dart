@@ -29,6 +29,8 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
+    final h = MediaQuery.of(context).size.height * 0.35;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -42,7 +44,7 @@ class _LoadingState extends State<Loading> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Transform.translate(
-              offset: Offset(0, 300),
+              offset: Offset(0, h),
               child: Image.asset(
                 'assets/images/Logo.png',
                 fit: BoxFit.cover,

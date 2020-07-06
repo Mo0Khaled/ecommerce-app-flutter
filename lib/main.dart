@@ -29,7 +29,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.getString('lang');
+
 //  prefs.setString('lang', 'en');
 //  Locale locale = Locale(prefs.getString('lang'),'');
   runApp(BoltApp());
