@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ProductProviders with ChangeNotifier {
-  List<Product> _items = [
-  ];
+  List<Product> _items = [];
   final String authToken;
   final String userId ;
   ProductProviders(this.authToken,this.userId,this._items);
@@ -14,7 +13,13 @@ class ProductProviders with ChangeNotifier {
   Product findById(String id) => _items.firstWhere((prod) => prod.id == id);
   List<Product> get favItems =>
       _items.where((prodItem) => prodItem.isFav).toList();
-
+  List<Product> filter(String name) {
+    return _items
+        .where(
+          (element) => element.categoryId.contains(name),
+    )
+        .toList();
+  }
   Future<void> fetchAndSetProduct([bool filterByUser = false]) async {
     final filter = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url = 'https://boltecommerce-11687.firebaseio.com/products.json?auth=$authToken&$filter';
@@ -32,6 +37,7 @@ class ProductProviders with ChangeNotifier {
         loadedProduct.add(
           Product(
             id: productId,
+            categoryId: productData['category_id'],
             title: productData['title'],
             review: productData['review'],
             discount: productData['discount'],
@@ -57,6 +63,7 @@ class ProductProviders with ChangeNotifier {
       final response = await http.post(
         url,
         body: json.encode({
+          'category_id': product.categoryId,
           'title': product.title,
           'review': product.review,
           'description': product.description,
@@ -70,6 +77,7 @@ class ProductProviders with ChangeNotifier {
       );
       final newProduct = Product(
         id: json.decode(response.body)['name'],
+        categoryId: product.categoryId,
         title: product.title,
         review: product.review,
         discount:  product.discount,
@@ -93,6 +101,7 @@ class ProductProviders with ChangeNotifier {
       await http.patch(
         url,
         body: json.encode({
+          'category_id':newProduct.categoryId,
           'title': newProduct.title,
           'review': newProduct.review,
           'description': newProduct.description,

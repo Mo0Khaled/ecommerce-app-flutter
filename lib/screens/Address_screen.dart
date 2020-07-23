@@ -1,6 +1,6 @@
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/addressProvider.dart';
-import 'package:boltecommerce/screens/add_address.dart';
+import 'file:///F:/work/fluter/ecommerce-app/lib/widget/add_address.dart';
 import 'package:boltecommerce/screens/payment_screen.dart';
 import 'package:boltecommerce/widget/address_item.dart';
 import 'package:flutter/material.dart';

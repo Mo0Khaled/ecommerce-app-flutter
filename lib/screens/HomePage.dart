@@ -2,6 +2,7 @@ import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/cart.dart';
 import 'package:boltecommerce/providers/productProviders.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
+import 'package:boltecommerce/screens/category_product_screen.dart';
 import 'package:boltecommerce/screens/favorite.dart';
 import 'package:boltecommerce/screens/featured.dart';
 import 'package:boltecommerce/widget/app_drawer.dart';
@@ -71,7 +72,9 @@ class HomePage extends StatelessWidget {
                     buildCategory(
                       img: "assets/images/woman.png",
                       name: translate.getTranslated('woman_category'),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(CategoryProductScreen.routeId,arguments: 'women');
+                      },
                       left: 25,
                       color1: Color(0xff6681EB),
                       color2: Color(0xff6590F1),
@@ -80,7 +83,9 @@ class HomePage extends StatelessWidget {
                     buildCategory(
                       img: "assets/images/man.png",
                       name: translate.getTranslated('man_category'),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(CategoryProductScreen.routeId,arguments: 'men');
+                      },
                       left: 35,
                       color1: Color(0xffFF5858),
                       color2: Color(0xffFE5870),
@@ -89,7 +94,9 @@ class HomePage extends StatelessWidget {
                     buildCategory(
                       img: "assets/images/kid.png",
                       name: translate.getTranslated('kids_category'),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(CategoryProductScreen.routeId,arguments: 'kids');
+                      },
                       left: 35,
                       color1: Color(0xff43E97B),
                       color2: Color(0xff3EEFA0),

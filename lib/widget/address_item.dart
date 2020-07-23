@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:boltecommerce/lang/appLocale.dart';
 import 'package:boltecommerce/providers/addressProvider.dart';
-import 'package:boltecommerce/screens/add_address.dart';
+import 'file:///F:/work/fluter/ecommerce-app/lib/widget/add_address.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

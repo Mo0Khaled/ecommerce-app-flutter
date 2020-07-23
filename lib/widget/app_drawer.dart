@@ -40,8 +40,8 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                authData.userId == 'TAkaObz0d8NEfPCSkCovdoWri203' ||authData.userId == 'KPk06mKhdvWts0w6sm4Y4MFxrM22' ? Navigator.of(context).pushNamed(UserProduct.routeId) :
-                    showDialog(context: context,builder: (context)=>   Platform.isAndroid ? CupertinoAlertDialog(
+                authData.userId == 'TAkaObz0d8NEfPCSkCovdoWri203' ||authData.userId == 'KPk06mKdvWts0w6sm4Y4MFxrM22' ? Navigator.of(context).pushNamed(UserProduct.routeId) :
+                    showDialog(context: context,builder: (context)=>   Platform.isIOS ? CupertinoAlertDialog(
                       title: Text(translate.getTranslated('hello')),
                       content: Text(translate.getTranslated('settings_warning')),
                       actions: <Widget>[

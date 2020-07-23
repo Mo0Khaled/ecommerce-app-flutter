@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 class Product with ChangeNotifier {
   final String id;
+  final String categoryId;
   final String title;
   final double review;
   final double discount;
@@ -14,6 +15,7 @@ class Product with ChangeNotifier {
 
   Product({
     @required this.id,
+    @required this.categoryId,
     @required this.title,
     @required this.review,
     @required this.discount,

@@ -9,8 +9,9 @@ import 'package:boltecommerce/screens/Address_screen.dart';
 import 'package:boltecommerce/screens/Authentication_screen.dart';
 import 'package:boltecommerce/screens/EditedProductScreen.dart';
 import 'package:boltecommerce/screens/HomePage.dart';
-import 'package:boltecommerce/screens/add_address.dart';
+import 'file:///F:/work/fluter/ecommerce-app/lib/widget/add_address.dart';
 import 'package:boltecommerce/screens/cart_screen.dart';
+import 'package:boltecommerce/screens/category_product_screen.dart';
 import 'package:boltecommerce/screens/check_out.dart';
 import 'package:boltecommerce/screens/confirmation.dart';
 import 'package:boltecommerce/screens/favorite.dart';
@@ -136,6 +137,7 @@ class BoltApp extends StatelessWidget {
             UserProduct.routeId: (context) => UserProduct(),
             EditedProductScreen.routeId: (context) => EditedProductScreen(),
             LanguageScreen.routeId:(context) => LanguageScreen(),
+            CategoryProductScreen.routeId:(context)=> CategoryProductScreen(),
           },
         ),
       ),

@@ -14,12 +14,14 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _discountFocusNode = FocusNode();
+  final _categoryFocusNode = FocusNode();
   final _imgFocusNode = FocusNode();
   final _imgController = TextEditingController();
   final _imgUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   var _editedProduct = Product(
     id: null,
+    categoryId: 'men',
     title: "",
     review: null,
     discount: 0,
@@ -30,36 +32,42 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
   );
   var _initValue = {
     'title': '',
+    'category_id': '',
     'description': '',
     'price': '',
     'discount': '',
     'img': '',
   };
-  var _isInit =true;
+  var _isInit = true;
+
   @override
   void initState() {
-  _imgFocusNode.addListener(_upDateImageUrl);
+    _imgFocusNode.addListener(_upDateImageUrl);
     super.initState();
   }
+
   @override
   void didChangeDependencies() {
-    if(_isInit){
+    if (_isInit) {
       final productId = ModalRoute.of(context).settings.arguments as String;
-      if(productId != null){
-        _editedProduct = Provider.of<ProductProviders>(context).findById(productId);
+      if (productId != null) {
+        _editedProduct =
+            Provider.of<ProductProviders>(context).findById(productId);
         _initValue = {
           'title': _editedProduct.title,
-          'description':_editedProduct.description,
-          'price':_editedProduct.price.toString(),
+          'description': _editedProduct.description,
+          'price': _editedProduct.price.toString(),
           'discount': _editedProduct.discount.toString(),
+          'category_id': _editedProduct.categoryId,
           'img': '',
         };
         _imgController.text = _editedProduct.img;
       }
     }
-    _isInit =false;
+    _isInit = false;
     super.didChangeDependencies();
   }
+
   @override
   void dispose() {
     _imgUrlFocusNode.removeListener(_upDateImageUrl);
@@ -67,13 +75,14 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
     _descriptionFocusNode.dispose();
     _imgFocusNode.dispose();
     _imgController.dispose();
+    _categoryFocusNode.dispose();
     super.dispose();
   }
 
   void _upDateImageUrl() {
     if (!_imgUrlFocusNode.hasFocus) {
       if ((!_imgController.text.startsWith("http") &&
-          !_imgController.text.startsWith("https")) ||
+              !_imgController.text.startsWith("https")) ||
           (!_imgController.text.endsWith("png") &&
               !_imgController.text.endsWith("jpg") &&
               !_imgController.text.endsWith("jpeg"))) {
@@ -82,6 +91,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
       setState(() {});
     }
   }
+
   void _saveForm() {
     final isValid = _form.currentState.validate();
     if (!isValid) {
@@ -98,6 +108,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
     Navigator.of(context).pop();
   }
 
+  String initialValue = 'men';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,6 +140,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                 onSaved: (val) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
+                    categoryId: _editedProduct.categoryId,
                     title: val,
                     review: _editedProduct.review,
                     discount: _editedProduct.discount,
@@ -162,6 +174,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                 onSaved: (val) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
+                    categoryId: _editedProduct.categoryId,
                     title: _editedProduct.title,
                     review: _editedProduct.review,
                     discount: _editedProduct.discount,
@@ -189,6 +202,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                 onSaved: (val) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
+                    categoryId: _editedProduct.categoryId,
                     title: _editedProduct.title,
                     review: _editedProduct.review,
                     discount: _editedProduct.discount,
@@ -203,7 +217,9 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                 initialValue: _initValue['discount'],
                 decoration: InputDecoration(labelText: "Discount"),
                 keyboardType: TextInputType.number,
-                focusNode: _discountFocusNode,
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_categoryFocusNode);
+                },
                 validator: (val) {
                   if (val.isEmpty) {
                     return "Please Enter a Discount";
@@ -213,6 +229,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                 onSaved: (val) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
+                    categoryId: _editedProduct.categoryId,
                     title: _editedProduct.title,
                     review: _editedProduct.review,
                     discount: double.parse(val),
@@ -223,6 +240,57 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                   );
                 },
               ),
+              DropdownButton<String>(
+                value: initialValue,
+                items: <String>['men', 'women', 'kids']
+                    .map<DropdownMenuItem<String>>((value) => DropdownMenuItem(
+                          value: value,
+                          child: Text(value),
+                        ))
+                    .toList(),
+                onChanged: (String newValue) {
+                  setState(() {
+                    initialValue = newValue;
+                    _editedProduct = Product(
+                      id: _editedProduct.id,
+                      categoryId: initialValue,
+                      title: _editedProduct.title,
+                      review: _editedProduct.review,
+                      discount: _editedProduct.discount,
+                      shipping: _editedProduct.shipping,
+                      description: _editedProduct.description,
+                      img: _editedProduct.img,
+                      price: _editedProduct.price,
+                    );
+                  });
+                },
+              ),
+
+//              TextFormField(
+//                initialValue: _initValue['category_id'],
+//                decoration: InputDecoration(labelText: "Category"),
+//                keyboardType: TextInputType.text,
+//                focusNode: _categoryFocusNode,
+//                validator: (val) {
+//                  if (val.isEmpty) {
+//                    return "Please Enter a Category";
+//                  }
+//                  return null;
+//                },
+//                onSaved: (val) {
+//                  _editedProduct = Product(
+//                    id: _editedProduct.id,
+//                    categoryId: val,
+//                    title: _editedProduct.title,
+//                    review: _editedProduct.review,
+//                    discount: _editedProduct.discount,
+//                    shipping: _editedProduct.shipping,
+//                    description: _editedProduct.description,
+//                    img: _editedProduct.img,
+//                    price: _editedProduct.price,
+//                  );
+//                },
+//              ),
               TextFormField(
                 decoration: InputDecoration(labelText: "Img Url"),
                 textInputAction: TextInputAction.done,
@@ -249,6 +317,7 @@ class _EditedProductScreenState extends State<EditedProductScreen> {
                 onSaved: (val) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
+                    categoryId: _editedProduct.categoryId,
                     title: _editedProduct.title,
                     review: _editedProduct.review,
                     discount: _editedProduct.discount,
